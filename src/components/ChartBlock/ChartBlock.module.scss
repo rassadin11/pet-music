@@ -1,0 +1,125 @@
+.chart {
+    margin: 30px 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(31px);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.table {
+    margin-top: 20px;
+    width: 100%;
+    
+    & tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        & tr:first-child {
+            padding-bottom: 10px;
+        }
+
+        & tr {
+            display: flex;
+            position: relative;
+
+            & > * {
+                padding: 0 10px;
+            }
+
+            & > *:not(.name) {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+
+            & > *:first-child {
+                flex: 0 0 5%;
+            }
+            
+            & > *:nth-child(2) {
+                flex: 0 0 45%;
+            }
+            
+            & > *:nth-child(3) {
+                flex: 0 0 35%;
+            }
+            
+            & > *:nth-child(4) {
+                flex: 0 0 15%;
+            }
+            
+            @media (max-width: 900px) {
+                & > *:nth-child(2) {
+                    flex: 0 0 35%;
+                }
+                
+                & > *:nth-child(4) {
+                    flex: 0 0 25%;
+                }
+            }
+
+            @media (max-width: 768px) {
+                & > *:nth-child(2) {
+                    flex: 0 0 50%;
+                }
+
+                & > *:nth-child(3) {
+                    flex: 0 0 45%;
+                    padding: 0 60px 0 10px;
+                }
+                
+                & > *:nth-child(4) {
+                    display: none;
+                }
+            }
+
+            @media (max-width: 600px) {
+                & > *:nth-child(2) {
+                    flex: 0 0 95%;
+                    padding: 0 60px 0 10px;
+                }
+                
+                & > *:nth-child(3) {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ellipsis {
+    position: absolute;
+    width: 30px;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+
+    @media (min-width: 768px) {
+        display: none!important;
+    }
+}
+
+.tableHeaders {
+    border-bottom: 1px solid #fff;
+}
+
+.music {
+    background: transparent;
+    transition: all .3s ease;
+    border-radius: 3px;
+    padding: 5px;
+    min-height: 50px;
+    
+    &:hover {
+        background: rgba(87, 87, 87, 0.6);
+    }
+}

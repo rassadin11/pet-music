@@ -1,0 +1,224 @@
+.container {
+    max-width: 1100px;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.4);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.logo {
+    font-size: 26px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+    filter: brightness(0.85);
+    white-space: nowrap;
+    transition: all .3s ease;
+
+    &:hover {
+        filter: brightness(1);
+    }
+
+    &:before {
+        content: '';
+        position: absolute;    
+        left: 39.7%;
+        top: 0;
+        border: 18.5px solid transparent;
+        border-right: 4px solid rgb(33, 14, 17);
+        border-bottom: 74px solid rgb(33, 14, 17);
+        z-index: 99;
+        transition: all .5s ease;
+    }
+
+    & p {
+        font-style: normal;
+        background-clip: none;
+        border-radius: 2px;
+        font-size: 30px;
+        padding: 0 5px;
+        position: relative;
+        color: #fff;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 52%;
+            height: 100%;
+            background: #F7C600; 
+            transition: all 0.5s ease;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 52%;
+            width: 48%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            transition: all 0.5s ease;
+        }
+    }
+
+    & span {
+        position: relative;
+        z-index: 100;
+        transition: all 0.5s ease;
+
+        &:first-child {
+            color: #000;
+        }
+
+        &:last-child {
+            color: #F7C600;
+        }
+    }
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+}
+
+.navList {
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.list {
+    display: flex;
+    list-style-type: none;
+    align-items: center;
+    gap: 15px;
+
+    * a {
+        color: #fff;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        font-size: 30px;
+        height: 100%;
+        justify-content: center;
+    }
+}
+
+.input {
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    width: 250px;
+    outline: none;
+    padding-left: 40px;
+    padding-right: 15px;
+    background-image: url('../../assets/search.svg');
+    background-color: rgba(255, 255, 255, 0.1);
+    background-position-y: center;
+    background-position-x: 0.5rem;
+    background-repeat: no-repeat;
+    margin-left: 15px;
+    color: #fff;
+
+    &::placeholder {
+        color: #fff;
+    }
+}
+
+.burgerMenu {
+    @media (min-width: 769px) {
+        display: none;
+    }
+}
+
+.burger {
+  cursor: pointer;
+  display: block;
+  position: relative;
+  border: none;
+  background: transparent;
+  width: 40px;
+  height: 26px;
+  z-index: 100;
+
+  @media (max-width: 600px) {
+    position: absolute;
+    top: 35px;
+    right: 25px;
+  }
+}
+
+.burger::before,
+.burger::after {
+  content: '';
+  left: 0;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.burger::before {
+  top: 0;
+  box-shadow: 0 11px 0 #fff;
+  transition: box-shadow .3s .15s, top .3s .15s, transform .3s;
+}
+
+.burger::after {
+  bottom: 0;
+  transition: bottom .3s .15s, transform .3s;
+}
+
+.burger.active::before {
+  top: 11px;
+  transform: rotate(45deg);
+  box-shadow: 0 6px 0 rgba(0,0,0,0);
+  transition: box-shadow .15s, top .3s, transform .3s .15s;
+}
+
+.burger.active::after {
+  bottom: 11px;
+  transform: rotate(-45deg);
+  transition: bottom .3s, transform .3s .15s;
+}
+
+.navMobile {
+    position: fixed;
+    top: 0;
+    left: -100vw;
+    transition: all .3s ease;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    background: #191919;
+
+    &.active {
+        left: 0;
+    }
+}
