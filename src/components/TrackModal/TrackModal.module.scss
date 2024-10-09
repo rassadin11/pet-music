@@ -7,6 +7,10 @@
     transition: visibility, opacity, top .5s ease;
     background: #171717;
     height: 50vh;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
 
     &.active {
         top: 50vh;
@@ -15,4 +19,41 @@
     @media (min-width: 768px) {
         display: none;
     }
+}
+
+.cross {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    cursor: pointer;
+    width: 25px;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+}
+
+.trackName {
+    font-size: 24px;
+}
+
+.artist {
+    font-size: 16px;
+    color: #cecece;
+}
+
+.itemTitle {
+    margin: 10px 0;
+    font-size: 20px;
+}
+
+.itemSummary {
+    text-align: justify;
 }

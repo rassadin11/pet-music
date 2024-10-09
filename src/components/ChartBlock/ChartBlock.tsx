@@ -10,7 +10,7 @@ import { globalActions } from '../../store/global.slice'
 
 const ChartBlock = () => {
 	const dispatch = useDispatch<AppDispatch>()
-	const { track, chartErrorMessage } = useSelector((s: RootState) => s.chart)
+	const { tracks, chartErrorMessage } = useSelector((s: RootState) => s.chart)
 
 	useEffect(() => {
 		dispatch(getTracks())
@@ -23,16 +23,16 @@ const ChartBlock = () => {
 	return (
 		<div className={s.chart}>
 			<Title>Самые популярные песни</Title>
-			{track ? (
+			{tracks ? (
 				<table className={s.table}>
 					<tbody>
 						<tr className={s.tableHeaders}>
 							<th>#</th>
 							<th>Название</th>
 							<th>Автор</th>
-							<th>Слушатели</th>
+							<th>Прослушивания</th>
 						</tr>
-						{track.map((item, idx) => (
+						{tracks.map((item, idx) => (
 							<MusicItem
 								key={idx}
 								item={item}

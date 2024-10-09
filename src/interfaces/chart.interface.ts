@@ -6,21 +6,23 @@ export interface IArtist {
 }
 
 export interface IImage {
-    text: string
+    '#text': string
     size: "small" | 'medium' | 'large' | 'extralarge'
 }
 
 export interface IAlbum {
     name: string,
-    uri: string
+    uri: string,
+    image?: IImage[]
 }
 
 export interface ITrack {
     name: string,
     url: string,
     duration: number
-    playcount: false,
+    playcount: string | number,
     listeners: string | number,
     mbid: boolean,
     artist: IArtist
+    album?: IAlbum
 }

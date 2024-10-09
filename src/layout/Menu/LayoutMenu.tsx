@@ -3,6 +3,7 @@ import s from './LayoutMenu.module.scss'
 import { useEffect, useState } from 'react'
 import cn from 'classnames'
 import TrackModal from '../../components/TrackModal/TrackModal'
+import { bodyHidden } from '../../utils/BodyHidden'
 
 interface IMenuItem {
 	id: number
@@ -23,7 +24,7 @@ const initialValue: IMenuItem[] = [
 	},
 	{
 		id: 3,
-		path: '/charts',
+		path: '/songs',
 		title: 'Чарты',
 	},
 ]
@@ -36,11 +37,7 @@ const LayoutMenu = () => {
 	}
 
 	useEffect(() => {
-		if (burger) {
-			document.body.classList.add('hidden')
-		} else {
-			document.body.classList.remove('hidden')
-		}
+		bodyHidden(!!burger)
 	}, [burger])
 
 	return (
