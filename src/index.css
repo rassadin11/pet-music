@@ -7,7 +7,6 @@
 
 body {
   position: relative;
-  min-height: 100vh;
   color: #fff;
 
   &:before {
@@ -31,4 +30,8 @@ body {
 
 a {
   text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }

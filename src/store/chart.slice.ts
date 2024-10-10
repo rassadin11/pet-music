@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ITrack } from './../interfaces/chart.interface';
+import Typograf from 'typograf';
 
 export const PREFIX = 'http://ws.audioscrobbler.com/2.0/'
 export const API_KEY = '14cc9a339ab6c5553aa392ee4278232d'
@@ -14,12 +15,16 @@ interface IWiki {
 interface IChartState {
     tracks: ITrack[] | null
     track: ITrack & {wiki: IWiki} | null
+    isLoading: boolean
+    dateOfRequest: number | null
     chartErrorMessage: string
 }
 
 const initialState: IChartState = {
     tracks: null,
     track: null,
+    isLoading: false,
+    dateOfRequest: null,
     chartErrorMessage: ''
 }
 
@@ -62,17 +67,33 @@ export const chartSlice = createSlice({
 
         clearTrack: (state) => {
             state.track = null
+        },
+
+        typographTrack: (state) => {
+            if (!state.track) return;
+
+            const typ = new Typograf({locale: ['ru', 'en-US']});
+            state.track.wiki.content = typ.execute(state.track.wiki.content)
+            state.track.wiki.summary = typ.execute(state.track.wiki.summary)
         }
     },
     extraReducers: builder => {
         builder.addCase(getTracks.fulfilled, (state, action) => {
+            state.isLoading = false
             if (!action.payload) return;
             state.tracks = action.payload.tracks.track
+            state.dateOfRequest = new Date().getTime();
+            console.log('changed date request time')
 
             chartSlice.caseReducers.sortPositionOfTracks(state)
         })
+
+        builder.addCase(getTracks.pending, (state) => {
+            state.isLoading = true
+        })
         
         builder.addCase(getTracks.rejected, (state, action) => {
+            state.isLoading = false
             if (!action.error.message) return;
             state.chartErrorMessage = action.error.message
         })
@@ -80,11 +101,19 @@ export const chartSlice = createSlice({
         builder.addCase(getTrack.fulfilled, (state, action) => {
             if (!action.payload) return;
             state.track = action.payload.track
+            
+            state.isLoading = false
+            chartSlice.caseReducers.typographTrack(state)
+        })
+
+        builder.addCase(getTrack.pending, (state) => {
+            state.isLoading = true
         })
 
         builder.addCase(getTrack.rejected, (state, action) => {
             if (!action.error.message) return;
             state.chartErrorMessage = action.error.message
+            state.isLoading = false
         })
     }
 })

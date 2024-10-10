@@ -2,8 +2,8 @@ import { Link, Outlet } from 'react-router-dom'
 import s from './LayoutMenu.module.scss'
 import { useEffect, useState } from 'react'
 import cn from 'classnames'
-import TrackModal from '../../components/TrackModal/TrackModal'
 import { bodyHidden } from '../../utils/BodyHidden'
+import TrackModal from '../../components/TrackModal/TrackModal'
 
 interface IMenuItem {
 	id: number
@@ -47,9 +47,7 @@ const LayoutMenu = () => {
 					<div className={s.wrapper}>
 						<Link to='/'>
 							<div className={s.logo}>
-								<p>
-									<span>Listen</span> <span>Music</span>
-								</p>
+								acous<span className={s.modern}>TI</span>cally
 							</div>
 						</Link>
 						<div className={s.search}>

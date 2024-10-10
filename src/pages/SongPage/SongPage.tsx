@@ -1,48 +1,51 @@
 import { useLocation } from 'react-router-dom'
-import { ITrack } from '../../interfaces/chart.interface'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { API_KEY, PREFIX } from '../../store/chart.slice'
+import Loading from '../../components/Loading/Loading'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../store/store'
+import { getTrack } from '../../store/chart.slice'
+import s from './SongPage.module.scss'
+import Tags from '../../components/Tags/Tags'
+import { num_word, validateListeners } from '../../utils/TrackValidation'
 
 const SongPage = () => {
-	const [track, setTrack] = useState<ITrack>()
-	const [loading, setLoading] = useState<boolean>(false)
+	const dispatch = useDispatch<AppDispatch>()
+	const { isLoading, track } = useSelector((s: RootState) => s.chart)
 	const location = useLocation()
-	const song: ITrack = location.state.song
 
 	useEffect(() => {
-		const getTrack = async () => {
-			try {
-				setLoading(true)
-				const { data } = await axios.get(
-					PREFIX +
-						`?method=track.getInfo&api_key=${API_KEY}&artist=${song.artist.name}&track=${song.name}&format=json`
-				)
-
-				setTrack(data.track)
-				setLoading(false)
-			} catch (e) {
-				if (e instanceof Error) {
-					throw new Error(e.message)
-				}
-
-				setLoading(false)
-			}
-		}
-
-		getTrack()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+		dispatch(getTrack(location.state.song))
+	}, [dispatch, location.state.song])
 
 	return (
 		<>
 			{track && (
-				<div>
-					<h1>{track.name}</h1>
-					<p>{track.artist.name}</p>
+				<div className={s.wrapper}>
+					<div className={s.flex}>
+						<div>
+							<h1 className={s.name}>{track.name}</h1>
+							<p>{track.artist.name}</p>
+						</div>
+						<p className={s.public}>Опубликовано: {track.wiki.published}</p>
+					</div>
+					<p className={s.listeners}>
+						{validateListeners(+track.listeners)}{' '}
+						{num_word(+track.listeners, [
+							'слушатель',
+							'слушателя',
+							'слушателей',
+						])}{' '}
+						за месяц
+					</p>
+					<Tags tags={track.toptags.tag} />
+
+					<p
+						dangerouslySetInnerHTML={{ __html: track.wiki.content }}
+						className={s.content}
+					></p>
 				</div>
 			)}
-			{loading && <p>Loading...</p>}
+			{isLoading && <Loading type='full' />}
 		</>
 	)
 }

@@ -1,3 +1,5 @@
+import { ITag } from './tags.interface'
+
 export interface IArtist {
     id: string,
     name: string,
@@ -25,4 +27,7 @@ export interface ITrack {
     mbid: boolean,
     artist: IArtist
     album?: IAlbum
+    toptags: {
+        tag: ITag[]
+    }
 }

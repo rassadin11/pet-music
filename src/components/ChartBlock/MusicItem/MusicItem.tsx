@@ -6,9 +6,16 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../../store/store'
 import { getTrack } from '../../../store/chart.slice'
 import { Link } from 'react-router-dom'
+import { memo } from 'react'
+import { ITrack } from '../../../interfaces/chart.interface'
+import { globalActions } from '../../../store/global.slice'
 
-const MusicItem = ({ item, openModal, idx }: MusicItemProps) => {
+const MusicItem = memo(({ item, idx }: MusicItemProps) => {
 	const dispatch = useDispatch<AppDispatch>()
+
+	const openModal = (item: ITrack) => {
+		dispatch(globalActions.setTrackModal(item))
+	}
 
 	const handleOpenModal = () => {
 		openModal(item)
@@ -38,6 +45,6 @@ const MusicItem = ({ item, openModal, idx }: MusicItemProps) => {
 			</td>
 		</tr>
 	)
-}
+})
 
 export default MusicItem

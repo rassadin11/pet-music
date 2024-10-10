@@ -7,11 +7,12 @@ import { globalActions } from '../../store/global.slice'
 import { chartActions } from '../../store/chart.slice'
 import { bodyHidden } from '../../utils/BodyHidden'
 import { useEffect } from 'react'
+import Loading from '../Loading/Loading'
 
 const TrackModal = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { trackModal } = useSelector((s: RootState) => s.global)
-	const { track } = useSelector((s: RootState) => s.chart)
+	const { track, isLoading } = useSelector((s: RootState) => s.chart)
 
 	const closeModal = () => {
 		dispatch(globalActions.setTrackModal(null))
@@ -27,12 +28,12 @@ const TrackModal = () => {
 
 	return (
 		<div className={cn(s.modal, trackModal ? s.active : '')}>
-			<img src={cross} alt='Cross' className={s.cross} onClick={closeModal} />
-			{track ? (
+			<img src={cross} alt='Закрыть' className={s.cross} onClick={closeModal} />
+			{track && (
 				<>
 					<div className={s.wrapper}>
 						{track.album?.image && (
-							<img src={track.album.image[1]['#text']} alt='' />
+							<img src={track.album.image[1]['#text']} alt='Обложка альбома' />
 						)}
 						<div className={s.title}>
 							<p className={s.trackName}>{track.name}</p>
@@ -50,9 +51,8 @@ const TrackModal = () => {
 						></p>
 					</div>
 				</>
-			) : (
-				'Loading...'
 			)}
+			{isLoading && <Loading type='small' />}
 		</div>
 	)
 }

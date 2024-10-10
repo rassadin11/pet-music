@@ -16,76 +16,18 @@
 }
 
 .logo {
-    font-size: 26px;
+    font-family: "Qwitcher Grypen", cursive;
+    font-weight: 700;
+    font-style: normal;
     color: #fff;
-    position: relative;
-    overflow: hidden;
-    border-radius: 3px;
-    filter: brightness(0.85);
-    white-space: nowrap;
-    transition: all .3s ease;
+    font-size: 38px;
+}
 
-    &:hover {
-        filter: brightness(1);
-    }
-
-    &:before {
-        content: '';
-        position: absolute;    
-        left: 39.7%;
-        top: 0;
-        border: 18.5px solid transparent;
-        border-right: 4px solid rgb(33, 14, 17);
-        border-bottom: 74px solid rgb(33, 14, 17);
-        z-index: 99;
-        transition: all .5s ease;
-    }
-
-    & p {
-        font-style: normal;
-        background-clip: none;
-        border-radius: 2px;
-        font-size: 30px;
-        padding: 0 5px;
-        position: relative;
-        color: #fff;
-
-        &:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 52%;
-            height: 100%;
-            background: #F7C600; 
-            transition: all 0.5s ease;
-        }
-
-        &:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 52%;
-            width: 48%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            transition: all 0.5s ease;
-        }
-    }
-
-    & span {
-        position: relative;
-        z-index: 100;
-        transition: all 0.5s ease;
-
-        &:first-child {
-            color: #000;
-        }
-
-        &:last-child {
-            color: #F7C600;
-        }
-    }
+.modern {
+    font-family: "Qwitcher Grypen", cursive;
+    font-weight: 700;
+    font-style: normal;
+    color: #e8d765;
 }
 
 .wrapper {
@@ -96,6 +38,10 @@
         flex-direction: column;
         gap: 10px;
         width: 100%;
+    }
+
+    & a:hover {
+        text-decoration: none;
     }
 }
 

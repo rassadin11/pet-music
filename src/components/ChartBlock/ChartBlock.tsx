@@ -4,21 +4,27 @@ import { AppDispatch, RootState } from '../../store/store'
 import { getTracks } from '../../store/chart.slice'
 import Title from '../Title/Title'
 import s from './ChartBlock.module.scss'
-import { ITrack } from '../../interfaces/chart.interface'
 import MusicItem from './MusicItem/MusicItem'
-import { globalActions } from '../../store/global.slice'
 
 const ChartBlock = () => {
 	const dispatch = useDispatch<AppDispatch>()
-	const { tracks, chartErrorMessage } = useSelector((s: RootState) => s.chart)
+	const { tracks, chartErrorMessage, dateOfRequest } = useSelector(
+		(s: RootState) => s.chart
+	)
 
 	useEffect(() => {
-		dispatch(getTracks())
-	}, [dispatch])
+		if (!dateOfRequest) dispatch(getTracks())
+		else {
+			const date = new Date(
+				new Date().valueOf() - new Date(dateOfRequest).valueOf()
+			)
 
-	const openModal = (item: ITrack) => {
-		dispatch(globalActions.setTrackModal(item))
-	}
+			// делаем запрос только если после прошлого запроса прошло 10 минут
+			if (date.getTime() / 1000 / 60 > 10) {
+				dispatch(getTracks())
+			}
+		}
+	}, [dispatch, dateOfRequest])
 
 	return (
 		<div className={s.chart}>
@@ -33,12 +39,7 @@ const ChartBlock = () => {
 							<th>Прослушивания</th>
 						</tr>
 						{tracks.map((item, idx) => (
-							<MusicItem
-								key={idx}
-								item={item}
-								idx={idx}
-								openModal={openModal}
-							/>
+							<MusicItem idx={idx} key={idx} item={item} />
 						))}
 					</tbody>
 				</table>
