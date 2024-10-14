@@ -1,0 +1,14 @@
+.button {
+    background: rgba(0, 0, 0, 0.4);
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: box-shadow .3s ease;
+    text-transform: uppercase;
+
+    &:hover {
+        box-shadow: 0px 0px 23px 3px rgba(34, 60, 80, 0.2);
+    }
+}

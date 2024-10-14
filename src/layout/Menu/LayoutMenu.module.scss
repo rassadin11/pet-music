@@ -21,6 +21,10 @@
     font-style: normal;
     color: #fff;
     font-size: 38px;
+
+    @media (max-width: 600px) {
+        font-size: 46px;
+    }
 }
 
 .modern {
@@ -38,6 +42,10 @@
         flex-direction: column;
         gap: 10px;
         width: 100%;
+
+        & > div {
+            width: 100%;
+        }
     }
 
     & a:hover {
@@ -92,6 +100,11 @@
 
     &::placeholder {
         color: #fff;
+    }
+
+    @media (max-width: 600px) {
+        width: 100%;
+        margin: 0;
     }
 }
 

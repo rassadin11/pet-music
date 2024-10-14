@@ -31,3 +31,17 @@ export interface ITrack {
         tag: ITag[]
     }
 }
+
+export interface IWiki {
+    published: string
+    summary: string
+    content: string
+}
+
+export interface IChartState {
+    tracks: ITrack[] | null
+    track: ITrack & {wiki: IWiki} | null
+    isLoading: boolean
+    dateOfRequest: number | null
+    chartErrorMessage: string
+}

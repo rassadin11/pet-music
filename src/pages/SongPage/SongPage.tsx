@@ -29,11 +29,11 @@ const SongPage = () => {
 						<p className={s.public}>Опубликовано: {track.wiki.published}</p>
 					</div>
 					<p className={s.listeners}>
-						{validateListeners(+track.listeners)}{' '}
-						{num_word(+track.listeners, [
-							'слушатель',
-							'слушателя',
-							'слушателей',
+						{validateListeners(+track.playcount)}{' '}
+						{num_word(+track.playcount, [
+							'прослушивания',
+							'прослушивания',
+							'прослушиваний',
 						])}{' '}
 						за месяц
 					</p>

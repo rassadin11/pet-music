@@ -1,24 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ITrack } from './../interfaces/chart.interface';
+import { IChartState, ITrack } from './../interfaces/chart.interface';
 import Typograf from 'typograf';
+import { API_KEY, PREFIX } from '../constants/server';
 
-export const PREFIX = 'http://ws.audioscrobbler.com/2.0/'
-export const API_KEY = '14cc9a339ab6c5553aa392ee4278232d'
-
-interface IWiki {
-    published: string
-    summary: string
-    content: string
-}
-
-interface IChartState {
-    tracks: ITrack[] | null
-    track: ITrack & {wiki: IWiki} | null
-    isLoading: boolean
-    dateOfRequest: number | null
-    chartErrorMessage: string
-}
 
 const initialState: IChartState = {
     tracks: null,
@@ -120,4 +105,3 @@ export const chartSlice = createSlice({
 
 export default chartSlice.reducer;
 export const chartActions = chartSlice.actions
-

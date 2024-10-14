@@ -1,0 +1,22 @@
+.prevArrow {
+    transform: rotate(180deg)
+}
+
+.next {
+}
+
+.slide {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 30px;
+}
+
+.button {
+    background: none;
+    border: none;
+}
+
+.swiperWrapper {
+    position: relative;
+}
