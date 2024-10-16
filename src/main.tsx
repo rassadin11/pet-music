@@ -11,6 +11,7 @@ import { Provider } from 'react-redux'
 import AlbumsPage from './pages/AlbumsPage/AlbumsPage.tsx'
 import MusiciansPage from './pages/MusiciansPage/MusiciansPage.tsx'
 import SongPage from './pages/SongPage/SongPage.tsx'
+import MusicianPage from './pages/MusicianPage/MusicianPage.tsx'
 
 const router = createBrowserRouter([
 	{
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
 			{
 				path: '/musicians',
 				element: <MusiciansPage />,
+			},
+			{
+				path: '/musicians/:authorName',
+				element: <MusicianPage />,
 			},
 			{
 				path: '/albums',

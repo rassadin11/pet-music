@@ -1,0 +1,124 @@
+
+.table {
+    margin-top: 20px;
+    width: 100%;
+    
+    & tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        & tr:first-child {
+            padding-bottom: 10px;
+        }
+
+        & tr {
+            display: flex;
+            position: relative;
+
+            & > * {
+                padding: 0 10px;
+            }
+
+            & > *:not(.name) {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+
+            & > *:first-child {
+                flex: 0 0 5%;
+            }
+
+            & > *:nth-child(2) {
+                flex: 0 0 35%;
+            }
+
+            & > *:nth-child(3) {
+                flex: 0 0 35%;
+            }
+
+            & > *:nth-child(4) {
+                flex: 0 0 25%;
+            }
+        }
+    }
+
+    &.threeColumns tbody tr {
+        & > *:first-child {
+            flex: 0 0 5%;
+        }
+
+        & > *:nth-child(2) {
+            flex: 0 0 55%;
+        }
+
+        & > *:nth-child(3) {
+            flex: 0 0 40%;
+        }
+
+        & > *:nth-child(4) {
+            flex: 0 0 0%;
+        }
+
+        @media (max-width: 600px) {
+            & > *:nth-child(2) {
+                flex: 0 0 80%;
+                justify-content: start;
+            }
+
+            & > *:nth-child(3) {
+                display: none;
+            }
+        }
+    }
+
+    & a {
+        color: inherit;
+    }
+}
+
+.tableHeaders {
+    border-bottom: 1px solid #fff;
+}
+
+.name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    & a {
+        color: inherit;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.music {
+    background: transparent;
+    transition: all .3s ease;
+    border-radius: 3px;
+    padding: 5px;
+    min-height: 50px;
+    
+    &:hover {
+        background: rgba(87, 87, 87, 0.6);
+    }
+}
+
+.ellipsis {
+    position: absolute;
+    width: 30px;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+
+    @media (min-width: 768px) {
+        display: none!important;
+    }
+}
+

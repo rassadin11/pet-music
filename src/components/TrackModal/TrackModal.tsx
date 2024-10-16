@@ -11,6 +11,8 @@ import Loading from '../Loading/Loading'
 
 const TrackModal = () => {
 	const dispatch = useDispatch<AppDispatch>()
+	// берем информацию о треке, для отображения ее в модальном окне
+	// если необходимо получение данном информации, то ждем загрузки
 	const { trackModal } = useSelector((s: RootState) => s.global)
 	const { track, isLoading } = useSelector((s: RootState) => s.chart)
 

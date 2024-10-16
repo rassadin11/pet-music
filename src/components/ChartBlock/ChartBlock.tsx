@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from '../../store/store'
 import { getTracks } from '../../store/chart.slice'
 import Title from '../Title/Title'
 import s from './ChartBlock.module.scss'
-import MusicItem from './MusicItem/MusicItem'
+import TracksTable from '../TracksTable/TracksTable'
 
 const ChartBlock = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -29,23 +29,7 @@ const ChartBlock = () => {
 	return (
 		<div className={s.chart}>
 			<Title>Самые популярные песни</Title>
-			{tracks ? (
-				<table className={s.table}>
-					<tbody>
-						<tr className={s.tableHeaders}>
-							<th>#</th>
-							<th>Название</th>
-							<th>Автор</th>
-							<th>Прослушивания</th>
-						</tr>
-						{tracks.map((item, idx) => (
-							<MusicItem idx={idx} key={idx} item={item} />
-						))}
-					</tbody>
-				</table>
-			) : (
-				<p>{chartErrorMessage}</p>
-			)}
+			{tracks ? <TracksTable tracks={tracks} /> : <p>{chartErrorMessage}</p>}
 		</div>
 	)
 }

@@ -1,4 +1,4 @@
-import { IAlbum, IArtist, IImage, IWiki } from './chart.interface';
+import { IAlbum, IArtist, IImage, ITrack, IWiki } from './chart.interface';
 import { ITag } from './tags.interface';
 
 export interface IArtistInfo {
@@ -16,6 +16,11 @@ export interface IArtistInfo {
     bio: IWiki
 }
 
+export interface IDetInfo {
+    albums: IAlbum[],
+    info: IArtistInfo
+}
+
 export interface IMusician {
     name: string;
     playcount: string | number;
@@ -24,13 +29,11 @@ export interface IMusician {
     url: string;
     streamable: string;
     image: IImage[]
-    detInfo: {
-        albums: IAlbum[],
-        info: IArtistInfo
-    }
+    detInfo: IDetInfo
 }
 
 export interface IMusiciansState {
     musicians: IMusician[]
+    activeMusician: IArtistInfo & {albums?: IAlbum[], toptracks?: ITrack[]} | null;
     errorMessage: string
 }

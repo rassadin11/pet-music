@@ -1,8 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Swiper as SwiperType } from 'swiper'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../store/store'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
 	getArtistInfoAndAlbum,
 	getMusicians,
@@ -14,12 +13,14 @@ import s from './MusiciansSlider.module.scss'
 import { Navigation, Pagination } from 'swiper/modules'
 import ArtistCard from '../ArtistCard/ArtistCard'
 import arrow from '../../assets/arrow-for-slider.svg'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const MusiciansSlider = () => {
 	const [index, setIndex] = useState<number>(0)
 	const dispatch = useDispatch<AppDispatch>()
+
+	// получаем первые 5 самых популярных музыкантов, для отображения их в слайдере
 	const { musicians } = useSelector((s: RootState) => s.musicians)
-	const swiperRef = useRef<SwiperType>()
 
 	useEffect(() => {
 		if (musicians.length) return
@@ -27,8 +28,8 @@ const MusiciansSlider = () => {
 	}, [dispatch, musicians.length])
 
 	useEffect(() => {
-		if (!musicians[index]) return
-		if (musicians[index].detInfo.albums.length) return
+		if (!musicians[index] || musicians[index].detInfo.albums.length) return
+		// делаем запрос только если о данном исполнители нет инфомации
 		dispatch(getArtistInfoAndAlbum({ name: musicians[index].name, limit: 1 }))
 	}, [dispatch, index, musicians])
 
@@ -37,36 +38,37 @@ const MusiciansSlider = () => {
 			<Swiper
 				modules={[Navigation, Pagination]}
 				navigation={{
-					prevEl: `.${s.prev}`,
-					nextEl: `.${s.next}`,
+					prevEl: `.${s.prevArrow}`,
+					nextEl: `.${s.nextArrow}`,
 				}}
-				pagination={{ clickable: true }}
+				pagination={{
+					clickable: true,
+					el: '.s-pagination',
+				}}
 				spaceBetween={20}
 				slidesPerView={1}
 				onSlideChange={(swiper) => setIndex(swiper.activeIndex)}
-				onBeforeInit={(swiper) => {
-					swiperRef.current = swiper
-				}}
 			>
 				{musicians.length &&
-					musicians.map((item) => (
-						<SwiperSlide key={item.name} className={s.slide}>
-							<ArtistCard item={item} />
-						</SwiperSlide>
-					))}
+					musicians.map((item, idx) => {
+						if (idx <= 4) {
+							return (
+								<SwiperSlide key={item.name} className={s.slide}>
+									<ArtistCard item={item} />
+								</SwiperSlide>
+							)
+						}
+					})}
 			</Swiper>
 
-			<div>
-				<button
-					onClick={() => swiperRef.current?.slidePrev()}
-					className={s.button}
-				>
+			<div className={s.arrows}>
+				<button className={s.button}>
 					<img src={arrow} alt='Предыдущий слайд' className={s.prevArrow} />
 				</button>
-				<button
-					onClick={() => swiperRef.current?.slideNext()}
-					className={s.button}
-				>
+
+				<div className='s-pagination'></div>
+
+				<button className={s.button}>
 					<img src={arrow} alt='Следующий слайд' className={s.nextArrow} />
 				</button>
 			</div>

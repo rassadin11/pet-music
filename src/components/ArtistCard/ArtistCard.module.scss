@@ -10,6 +10,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-align: justify;
     -webkit-line-clamp: 6;
 
     @media (max-width: 768px) {
@@ -28,6 +29,7 @@
   align-items: flex-start;
   padding: 20px 0;
   position: relative;
+  width: 100%;
 
   @media (max-width: 768px) {
     flex-direction: column;

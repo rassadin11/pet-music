@@ -1,14 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { IMusician, IMusiciansState } from '../interfaces/musicians.interface';
+import { IArtistInfo, IMusician, IMusiciansState } from '../interfaces/musicians.interface';
 import { API_KEY, PREFIX } from '../constants/server';
 import Typograf from 'typograf';
+import { IAlbum, ITrack } from '../interfaces/chart.interface';
 
 const initialState: IMusiciansState = {
     musicians: [],
+    activeMusician: null,
     errorMessage: ''
 }
 
+// получаем музыкантов
 export const getMusicians = createAsyncThunk('musicians/artists', async (limit: number) => {
     try {
         const {data} = await axios.get(PREFIX + `?method=chart.gettopartists&api_key=${API_KEY}&format=json&limit=${limit}&lang=ru`)
@@ -20,6 +23,7 @@ export const getMusicians = createAsyncThunk('musicians/artists', async (limit: 
     }
 })
 
+// получаем информацию об артисте и его самом популярном альбоме (для отображения в слайдере обложки данного альбома)
 export const getArtistInfoAndAlbum = createAsyncThunk('musicians/albums', async ({name, limit}: {name: string, limit: number}) => {
     try {
         const res1 = await axios.get(PREFIX + `?method=artist.gettopalbums&artist=${name}&api_key=${API_KEY}&format=json&limit=${limit}&lang=ru`)
@@ -32,22 +36,39 @@ export const getArtistInfoAndAlbum = createAsyncThunk('musicians/albums', async 
     }
 })
 
+// получаем ту же информацию, что и выше, но обрабатываем по-другому (нужно для страницы конкретного исполнителя)
+export const getMusicianInfo = createAsyncThunk(
+  'musicians/musician',
+  async ({ name }: {name: string}) => {
+    try {
+      const res1 = await axios.get(PREFIX + `?method=artist.gettopalbums&artist=${name}&api_key=${API_KEY}&format=json&limit=3&lang=ru`);
+      const res2 = await axios.get(PREFIX + `?method=artist.getinfo&artist=${name}&api_key=${API_KEY}&format=json&lang=ru`);
+      
+      return { data: res1.data, info: res2.data } ;
+    } catch (e) {
+      if (e instanceof Error) {
+        throw new Error(e.message)
+      }
+    }
+  }
+);
+
+// получаем треки артиста
+export const getTracksByMusician = createAsyncThunk('musicians/tracksByMusician', async ({name}: {name: string}) => {
+    try {
+        const {data} = await axios.get(PREFIX + `?method=artist.gettoptracks&artist=${name}&api_key=${API_KEY}&format=json&limit=10&lang=ru`)
+        return data
+    } catch (e) {
+        if (e instanceof Error) {
+            throw new Error(e.message)
+        }
+    }
+})
+
 export const musiciansSlice = createSlice({
     name: 'musicians',
     initialState,
-    reducers: {
-        typographTrack: (state) => {
-            if (!state.musicians) return;
-
-            const typ = new Typograf({locale: ['ru', 'en-US']});
-            state.musicians.forEach((musician) => {
-                if (musician.detInfo && musician.detInfo.info && musician.detInfo.info.bio) {
-                    musician.detInfo.info.bio.content = typ.execute(musician.detInfo.info.bio.content);
-                    musician.detInfo.info.bio.summary = typ.execute(musician.detInfo.info.bio.summary);
-                }
-            });
-        }
-    },
+    reducers: {},
     extraReducers: builder => {
         builder.addCase(getMusicians.fulfilled, (state, action) => {
             if (!action.payload) return;
@@ -61,7 +82,8 @@ export const musiciansSlice = createSlice({
 
         builder.addCase(getArtistInfoAndAlbum.fulfilled, (state, action) => {
             state.musicians = state.musicians.map((item) => {
-                if (!action.payload) return;
+                if (!action.payload) return item;
+
                 if (item.name === action.payload.name) {
                     item.detInfo = {
                         albums: action.payload.data.topalbums.album,
@@ -70,14 +92,44 @@ export const musiciansSlice = createSlice({
                 }
                 
                 return item
-            }) as IMusician[]
-            
-            musiciansSlice.caseReducers.typographTrack(state)
+            })
+
+            state.musicians.forEach((musician) => {
+                musician.detInfo = {
+                    ...musician.detInfo,
+                    info: typografText(musician.detInfo.info)
+                }
+            });
         })
 
         builder.addCase(getArtistInfoAndAlbum.rejected, (state, action) => {
+            if (!action.error.message) return;
+            state.errorMessage = action.error.message
+        })
+
+        builder.addCase(getMusicianInfo.fulfilled, (state, action) => {
             if (!action.payload) return;
-            state.errorMessage = action.error.message as string
+
+            state.activeMusician = {
+                ...typografText(action.payload.info.artist), 
+                albums: action.payload.data.topalbums.album as IAlbum[]
+            }
+        })
+
+        builder.addCase(getMusicianInfo.rejected, (state, action) => {
+            if (!action.error.message) return;
+            state.errorMessage = action.error.message
+        })
+
+        builder.addCase(getTracksByMusician.fulfilled, (state, action) => {
+            if (!action.payload) return;
+
+            if (state.activeMusician) {
+                state.activeMusician = {
+                    ...state.activeMusician,
+                    toptracks: action.payload.toptracks.track as ITrack[]
+                }
+            }
         })
     }
 })
@@ -85,3 +137,14 @@ export const musiciansSlice = createSlice({
 export default musiciansSlice.reducer;
 export const musiciansActions = musiciansSlice.actions
 
+// функция-типограф
+function typografText(artistInfo: IArtistInfo): IArtistInfo {
+    const typ = new Typograf({locale: ['ru', 'en-US']});
+
+    if (artistInfo && artistInfo.bio?.content && artistInfo.bio?.summary) {
+        artistInfo.bio.content = typ.execute(artistInfo.bio.content);
+        artistInfo.bio.summary = typ.execute(artistInfo.bio.summary);
+    }
+
+    return artistInfo
+}

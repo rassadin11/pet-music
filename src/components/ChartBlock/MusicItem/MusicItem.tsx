@@ -1,17 +1,20 @@
 import ellipsis from '../../../assets/ellipsis.svg'
 import { MusicItemProps } from './MusicItem.props'
-import s from '../ChartBlock.module.scss'
-import { validateListeners } from '../../../utils/TrackValidation'
+import s from '../../TracksTable/TracksTable.module.scss'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../../store/store'
 import { getTrack } from '../../../store/chart.slice'
 import { Link } from 'react-router-dom'
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import { ITrack } from '../../../interfaces/chart.interface'
 import { globalActions } from '../../../store/global.slice'
+import cn from 'classnames'
+import { validateListeners } from '../../../utils/TrackValidation'
 
-const MusicItem = memo(({ item, idx }: MusicItemProps) => {
+const MusicItem = memo(({ item, idx, without }: MusicItemProps) => {
 	const dispatch = useDispatch<AppDispatch>()
+	// проверяем из сколько столбцов состоит таблица
+	const [isThreeColumns] = useState<boolean>(without?.length ? true : false)
 
 	const openModal = (item: ITrack) => {
 		dispatch(globalActions.setTrackModal(item))
@@ -27,14 +30,43 @@ const MusicItem = memo(({ item, idx }: MusicItemProps) => {
 			<td>
 				<span>{idx + 1}</span>
 			</td>
-			<td className={s.name}>
+			<td
+				className={cn({
+					[s.name]: !isThreeColumns,
+					[s.bigName]: isThreeColumns,
+				})}
+			>
 				<Link to='songs/song' state={{ song: item }}>
 					{item.name}
 				</Link>
 			</td>
 
-			<td>{item.artist.name}</td>
-			<td>{validateListeners(item.playcount)}</td>
+			{Number(without?.findIndex((s) => s == 'artistName')) > -1 ? (
+				''
+			) : (
+				<td
+					className={cn({
+						[s.artistName]: !isThreeColumns,
+						[s.bigArtistName]: isThreeColumns,
+					})}
+				>
+					{item.artist.name}
+				</td>
+			)}
+
+			{Number(without?.findIndex((s) => s == 'listens')) > -1 ? (
+				''
+			) : (
+				<td
+					className={cn({
+						[s.playcount]: !isThreeColumns,
+						[s.bigPlaycount]: isThreeColumns,
+					})}
+				>
+					{validateListeners(item.playcount)}
+				</td>
+			)}
+
 			<td>
 				<img
 					src={ellipsis}
