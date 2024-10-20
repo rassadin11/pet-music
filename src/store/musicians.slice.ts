@@ -4,6 +4,7 @@ import { IArtistInfo, IMusician, IMusiciansState } from '../interfaces/musicians
 import { API_KEY, PREFIX } from '../constants/server';
 import Typograf from 'typograf';
 import { IAlbum, ITrack } from '../interfaces/chart.interface';
+import { ITag } from '../interfaces/tags.interface';
 
 const initialState: IMusiciansState = {
     musicians: [],
@@ -41,7 +42,7 @@ export const getMusicianInfo = createAsyncThunk(
   'musicians/musician',
   async ({ name }: {name: string}) => {
     try {
-      const res1 = await axios.get(PREFIX + `?method=artist.gettopalbums&artist=${name}&api_key=${API_KEY}&format=json&limit=3&lang=ru`);
+      const res1 = await axios.get(PREFIX + `?method=artist.gettopalbums&artist=${name}&api_key=${API_KEY}&format=json&limit=5&lang=ru`);
       const res2 = await axios.get(PREFIX + `?method=artist.getinfo&artist=${name}&api_key=${API_KEY}&format=json&lang=ru`);
       
       return { data: res1.data, info: res2.data } ;
@@ -56,7 +57,7 @@ export const getMusicianInfo = createAsyncThunk(
 // получаем треки артиста
 export const getTracksByMusician = createAsyncThunk('musicians/tracksByMusician', async ({name}: {name: string}) => {
     try {
-        const {data} = await axios.get(PREFIX + `?method=artist.gettoptracks&artist=${name}&api_key=${API_KEY}&format=json&limit=10&lang=ru`)
+        const {data} = await axios.get(PREFIX + `?method=artist.gettoptracks&artist=${name}&api_key=${API_KEY}&format=json&limit=5&lang=ru`)
         return data
     } catch (e) {
         if (e instanceof Error) {
@@ -68,7 +69,11 @@ export const getTracksByMusician = createAsyncThunk('musicians/tracksByMusician'
 export const musiciansSlice = createSlice({
     name: 'musicians',
     initialState,
-    reducers: {},
+    reducers: {
+        removeActiveMusician: (state) => {
+            state.activeMusician = null;
+        }
+    },
     extraReducers: builder => {
         builder.addCase(getMusicians.fulfilled, (state, action) => {
             if (!action.payload) return;
@@ -111,7 +116,11 @@ export const musiciansSlice = createSlice({
             if (!action.payload) return;
 
             state.activeMusician = {
-                ...typografText(action.payload.info.artist), 
+                ...state.activeMusician,
+                ...typografText(action.payload.info.artist),
+                tags: {
+                    tag: action.payload.info.artist.tags.tag as ITag[]
+                },
                 albums: action.payload.data.topalbums.album as IAlbum[]
             }
         })
@@ -130,6 +139,19 @@ export const musiciansSlice = createSlice({
                     toptracks: action.payload.toptracks.track as ITrack[]
                 }
             }
+
+            state.musicians.forEach(m => {
+                if (m.name === state.activeMusician?.name) {
+                    m.detInfo.albums = state.activeMusician?.albums || []
+                    m.toptracks = state.activeMusician?.toptracks
+                    m.detInfo.info.bio = state.activeMusician.bio
+                }
+            })
+        })
+
+        builder.addCase(getTracksByMusician.rejected, (state, action) => {
+            if (!action.error.message) return;
+            state.errorMessage = action.error.message
         })
     }
 })

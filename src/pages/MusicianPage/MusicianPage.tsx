@@ -10,6 +10,11 @@ import s from './MusicianPage.module.scss'
 import Loading from '../../components/Loading/Loading'
 import { num_word, validateListeners } from '../../utils/TrackValidation'
 import TracksTable from '../../components/TracksTable/TracksTable'
+import MusicianIntro from '../../components/MusicianIntro/MusicianIntro'
+import AlbumsBlock from '../../components/AlbumsBlock/AlbumsBlock'
+import { IFullAlbum } from '../../interfaces/albums.interface'
+import { IAlbum } from '../../interfaces/chart.interface'
+import MainPreview from '../../components/MainPreview/MainPreview'
 
 const MusicianPage = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -22,57 +27,100 @@ const MusicianPage = () => {
 	)
 
 	// количество слушателей
-	const [listens, setListens] = useState<string | number>(
-		activeMusician?.stats.listeners || ''
-	)
-
+	const [listens, setListens] = useState<string | number>('')
 	// текст для отображения кол-во слушателей в правильном падеже
-	const [listensText, setListensText] = useState<string>(
-		activeMusician
-			? num_word(+activeMusician.stats.listeners, [
-					'прослушивания',
-					'прослушивания',
-					'прослушиваний',
-			  ])
-			: ''
-	)
+	const [listensText, setListensText] = useState<string>('')
 
 	useEffect(() => {
-		if (!listens && activeMusician) {
-			setListens(validateListeners(activeMusician.stats.listeners))
-			setListensText(
-				num_word(+activeMusician.stats.listeners, [
-					'прослушивания',
-					'прослушивания',
-					'прослушиваний',
-				])
-			)
-		}
+		if (
+			!authorName ||
+			(activeMusician?.name === authorName && activeMusician?.toptracks)
+		)
+			return
 
-		if (!activeMusician?.toptracks?.length && authorName) {
+		if (!activeMusician || activeMusician.name !== authorName) {
+			dispatch(getMusicianInfo({ name: authorName }))
+			dispatch(getTracksByMusician({ name: authorName }))
+		} else if (
+			!activeMusician.toptracks?.[0] ||
+			activeMusician.name !== authorName
+		) {
 			dispatch(getTracksByMusician({ name: authorName }))
 		}
-
-		if (activeMusician) return
-
-		if (authorName && activeMusician === null)
-			dispatch(getMusicianInfo({ name: authorName }))
 	}, [activeMusician, authorName, listens, dispatch])
 
-	if (!activeMusician) return <Loading />
+	useEffect(() => {
+		setListens(validateListeners(activeMusician?.stats?.listeners || 0))
+
+		setListensText(
+			num_word(+(activeMusician?.stats?.listeners || 0), [
+				'прослушивания в месяц',
+				'прослушивания в месяц',
+				'прослушиваний в месяц',
+			])
+		)
+	}, [activeMusician?.stats?.listeners])
+
+	if (!activeMusician || activeMusician.name !== authorName) return <Loading />
+
+	const modifyAlbums = (item: IAlbum): IFullAlbum => {
+		const i: IFullAlbum = {
+			url: item.uri,
+			name: item.name,
+			image: item.image,
+			mbid: '',
+			artist: {
+				name: activeMusician.name,
+				url: activeMusician.url,
+				mbid: activeMusician.mbid,
+			},
+		}
+
+		return i
+	}
 
 	return (
 		<section className={s.musician}>
-			<h1>{activeMusician.name}</h1>
-			<p>
-				{listens} {listensText}
-			</p>
-			{activeMusician.toptracks && (
-				<TracksTable
-					tracks={activeMusician.toptracks}
-					without={['artistName']}
-				/>
-			)}
+			<MainPreview
+				img={activeMusician.albums?.[0]?.image?.[2]['#text']}
+				title={activeMusician.name}
+				listens={`${listens} ${listensText}`}
+				tags={activeMusician.tags.tag}
+			/>
+
+			<section>
+				<h2 className={s.title}>Популярные песни</h2>
+				<div className={s.tableWrapper}>
+					{activeMusician.toptracks && (
+						<TracksTable
+							tracks={activeMusician.toptracks}
+							without={['artistName']}
+						/>
+					)}
+				</div>
+			</section>
+
+			<section>
+				<h2 className={s.title}>Альбомы</h2>
+				<AlbumsBlock albums={activeMusician.albums?.map(modifyAlbums)} />
+			</section>
+
+			<section>
+				<h2 className={s.title}>Похожие музыканты</h2>
+				<div className={s.similar}>
+					<MusicianIntro items={activeMusician.similar.artist} />
+				</div>
+			</section>
+
+			<section>
+				<h2 className={s.title}>Подробное описание</h2>
+				<p
+					dangerouslySetInnerHTML={{
+						__html: activeMusician.bio.content,
+					}}
+					className={s.description}
+				></p>
+			</section>
 		</section>
 	)
 }

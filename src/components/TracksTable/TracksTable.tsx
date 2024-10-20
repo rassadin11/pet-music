@@ -1,9 +1,10 @@
+import { memo } from 'react'
 import MusicItem from '../ChartBlock/MusicItem/MusicItem'
 import s from './TracksTable.module.scss'
 import { TracksTableProps } from './TracksTable.props'
 import cn from 'classnames'
 
-const TracksTable = ({ tracks, without }: TracksTableProps) => {
+const TracksTable = memo(({ tracks, without }: TracksTableProps) => {
 	return (
 		<table
 			className={cn({
@@ -36,6 +37,6 @@ const TracksTable = ({ tracks, without }: TracksTableProps) => {
 			</tbody>
 		</table>
 	)
-}
+})
 
 export default TracksTable

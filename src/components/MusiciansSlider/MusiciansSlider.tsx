@@ -28,7 +28,7 @@ const MusiciansSlider = () => {
 	}, [dispatch, musicians.length])
 
 	useEffect(() => {
-		if (!musicians[index] || musicians[index].detInfo.albums.length) return
+		if (!musicians[index] || musicians[index].detInfo.albums[0]) return
 		// делаем запрос только если о данном исполнители нет инфомации
 		dispatch(getArtistInfoAndAlbum({ name: musicians[index].name, limit: 1 }))
 	}, [dispatch, index, musicians])

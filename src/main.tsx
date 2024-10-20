@@ -12,6 +12,7 @@ import AlbumsPage from './pages/AlbumsPage/AlbumsPage.tsx'
 import MusiciansPage from './pages/MusiciansPage/MusiciansPage.tsx'
 import SongPage from './pages/SongPage/SongPage.tsx'
 import MusicianPage from './pages/MusicianPage/MusicianPage.tsx'
+import AlbumPage from './pages/AlbumPage/AlbumPage.tsx'
 
 const router = createBrowserRouter([
 	{
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
 		element: <LayoutMenu />,
 		children: [
 			{
-				path: '/',
+				index: true, // Главная страница
 				element: <MainPage />,
 			},
 			{
@@ -35,12 +36,16 @@ const router = createBrowserRouter([
 				element: <MusiciansPage />,
 			},
 			{
-				path: '/musicians/:authorName',
+				path: '/musicians/:authorName', // Динамический параметр
 				element: <MusicianPage />,
 			},
 			{
 				path: '/albums',
 				element: <AlbumsPage />,
+			},
+			{
+				path: '/albums/:albumName',
+				element: <AlbumPage />,
 			},
 		],
 	},

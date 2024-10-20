@@ -1,0 +1,32 @@
+.card {
+    color: inherit;
+
+    &:hover {
+        text-decoration: none;
+
+        & img {
+            transform: scale(1.1);
+        }
+    }
+    
+    & img {
+        width: 100%;
+        transition: all .3s ease;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+.imageWrapper {
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.album {
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.artist {
+    font-size: 14px;
+}

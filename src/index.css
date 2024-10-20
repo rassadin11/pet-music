@@ -5,6 +5,11 @@
   font-family: "Roboto", sans-serif;
 }
 
+html, * {
+  scrollbar-color: #3d3d3d #fff;
+  scrollbar-width: thin;
+}
+
 body {
   position: relative;
   color: #fff;

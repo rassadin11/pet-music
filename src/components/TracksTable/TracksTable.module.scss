@@ -1,7 +1,10 @@
 
 .table {
-    margin-top: 20px;
     width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
     
     & tbody {
         display: flex;
@@ -62,10 +65,11 @@
             flex: 0 0 0%;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             & > *:nth-child(2) {
                 flex: 0 0 80%;
                 justify-content: start;
+                text-align: left;
             }
 
             & > *:nth-child(3) {

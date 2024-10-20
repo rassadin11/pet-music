@@ -29,11 +29,12 @@ export interface IMusician {
     url: string;
     streamable: string;
     image: IImage[]
+    toptracks?: ITrack[];
     detInfo: IDetInfo
 }
 
 export interface IMusiciansState {
     musicians: IMusician[]
-    activeMusician: IArtistInfo & {albums?: IAlbum[], toptracks?: ITrack[]} | null;
+    activeMusician: Omit<IArtistInfo, 'tags'> & {albums?: IAlbum[], toptracks?: ITrack[], tags: {tag: ITag[]}} | null;
     errorMessage: string
 }
