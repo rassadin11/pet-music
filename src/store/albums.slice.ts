@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { API_KEY, PREFIX } from '../constants/server';
 import { IAlbumsState } from '../interfaces/albums.interface';
+import { API_KEY, PREFIX } from '../constants/server';
 
 const initialState: IAlbumsState = {
     tags: [],

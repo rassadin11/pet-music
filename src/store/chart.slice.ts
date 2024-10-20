@@ -4,7 +4,6 @@ import { IChartState, ITrack } from './../interfaces/chart.interface';
 import Typograf from 'typograf';
 import { API_KEY, PREFIX } from '../constants/server';
 
-
 const initialState: IChartState = {
     tracks: null,
     track: null,
@@ -12,6 +11,8 @@ const initialState: IChartState = {
     dateOfRequest: null,
     chartErrorMessage: ''
 }
+
+console.log(PREFIX, import.meta)
 
 export const getTracks = createAsyncThunk('chart/tracks', async () => {
     try {

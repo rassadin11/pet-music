@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { IArtistInfo, IMusician, IMusiciansState } from '../interfaces/musicians.interface';
-import { API_KEY, PREFIX } from '../constants/server';
 import Typograf from 'typograf';
 import { IAlbum, ITrack } from '../interfaces/chart.interface';
 import { ITag } from '../interfaces/tags.interface';
+import { API_KEY, PREFIX } from '../constants/server';
 
 const initialState: IMusiciansState = {
     musicians: [],
