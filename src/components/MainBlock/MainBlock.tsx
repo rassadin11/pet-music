@@ -46,8 +46,8 @@ const MainBlock = () => {
 			{initialValue.map((item) => (
 				<Link
 					to={item.to}
-					className={s.item}
 					key={item.id}
+					className={s.item}
 					style={{
 						gridColumn: `${item.gridColumn[0]} / ${item.gridColumn[1]}`,
 						gridRow: `${item.gridRow[0]} / ${item.gridRow[1]}`,

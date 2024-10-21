@@ -22,7 +22,9 @@ export interface IActiveAlbum {
     };
     name: string;
     image: IImage[];
-    tracks: ITrack[];
+    tracks: {
+        track: ITrack[]
+    };
     listeners: string;
     playcound: string;
     url: string;
@@ -34,4 +36,5 @@ export interface IAlbumsState {
     albums: IFullAlbum[]
     errorMessage: string
     activeAlbum: IActiveAlbum | null
+    isLoading: boolean
 }

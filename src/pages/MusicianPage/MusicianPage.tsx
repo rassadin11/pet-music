@@ -34,16 +34,20 @@ const MusicianPage = () => {
 	useEffect(() => {
 		if (
 			!authorName ||
-			(activeMusician?.name === authorName && activeMusician?.toptracks)
+			(activeMusician?.name.toLowerCase() === authorName.toLowerCase() &&
+				activeMusician?.toptracks)
 		)
 			return
 
-		if (!activeMusician || activeMusician.name !== authorName) {
+		if (
+			!activeMusician ||
+			activeMusician.name.toLowerCase() !== authorName.toLowerCase()
+		) {
 			dispatch(getMusicianInfo({ name: authorName }))
 			dispatch(getTracksByMusician({ name: authorName }))
 		} else if (
 			!activeMusician.toptracks?.[0] ||
-			activeMusician.name !== authorName
+			activeMusician.name.toLowerCase() !== authorName.toLowerCase()
 		) {
 			dispatch(getTracksByMusician({ name: authorName }))
 		}
@@ -61,10 +65,14 @@ const MusicianPage = () => {
 		)
 	}, [activeMusician?.stats?.listeners])
 
-	if (!activeMusician || activeMusician.name !== authorName) return <Loading />
+	if (
+		!activeMusician ||
+		activeMusician.name.toLowerCase() !== authorName?.toLowerCase()
+	)
+		return <Loading />
 
 	const modifyAlbums = (item: IAlbum): IFullAlbum => {
-		const i: IFullAlbum = {
+		return {
 			url: item.uri,
 			name: item.name,
 			image: item.image,
@@ -75,8 +83,6 @@ const MusicianPage = () => {
 				mbid: activeMusician.mbid,
 			},
 		}
-
-		return i
 	}
 
 	return (

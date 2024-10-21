@@ -1,8 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { IChartState, ITrack } from './../interfaces/chart.interface';
+import { IArtist, IChartState, ITrack } from './../interfaces/chart.interface';
 import Typograf from 'typograf';
 import { API_KEY, PREFIX } from '../constants/server';
+
+function isString(artist: IArtist | string): artist is IArtist {
+    return (artist as IArtist).name !== undefined;
+}
 
 const initialState: IChartState = {
     tracks: null,
@@ -11,8 +15,6 @@ const initialState: IChartState = {
     dateOfRequest: null,
     chartErrorMessage: ''
 }
-
-console.log(PREFIX, import.meta)
 
 export const getTracks = createAsyncThunk('chart/tracks', async () => {
     try {
@@ -26,10 +28,15 @@ export const getTracks = createAsyncThunk('chart/tracks', async () => {
     }
 })
 
-export const getTrack = createAsyncThunk("chart/track", async ({artist, name}: ITrack) => {
+export const getTrack = createAsyncThunk("chart/track", async ({artist, name}: {artist: string, name: string} | ITrack) => {
     try {
-        const {data} = await axios.get(PREFIX + `?method=track.getInfo&api_key=${API_KEY}&artist=${artist.name}&track=${name}&format=json&lang=ru`)
-        return data
+        if (isString(artist)) {
+            const {data} = await axios.get(PREFIX + `?method=track.getInfo&api_key=${API_KEY}&artist=${artist.name}&track=${name}&format=json&lang=ru`)
+            return data
+        } else {
+            const {data} = await axios.get(PREFIX + `?method=track.getInfo&api_key=${API_KEY}&artist=${artist}&track=${name}&format=json&lang=ru`)
+            return data
+        }
     } catch (e) {
         if (e instanceof Error) {
             throw new Error(e.message)
@@ -59,8 +66,10 @@ export const chartSlice = createSlice({
             if (!state.track) return;
 
             const typ = new Typograf({locale: ['ru', 'en-US']});
-            state.track.wiki.content = typ.execute(state.track.wiki.content)
-            state.track.wiki.summary = typ.execute(state.track.wiki.summary)
+            if (state.track.wiki?.content) {
+                state.track.wiki.content = typ.execute(state.track.wiki.content)
+                state.track.wiki.summary = typ.execute(state.track.wiki.summary)
+            }
         }
     },
     extraReducers: builder => {

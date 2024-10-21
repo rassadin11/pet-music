@@ -5,6 +5,11 @@ import { TracksTableProps } from './TracksTable.props'
 import cn from 'classnames'
 
 const TracksTable = memo(({ tracks, without }: TracksTableProps) => {
+	if (!tracks.length)
+		return (
+			<p className={s.error}>В базе данных нет треков с данного альбома :( </p>
+		)
+
 	return (
 		<table
 			className={cn({

@@ -36,7 +36,10 @@ const MusicItem = memo(({ item, idx, without }: MusicItemProps) => {
 					[s.bigName]: isThreeColumns,
 				})}
 			>
-				<Link to='/songs/song' state={{ song: item }}>
+				<Link
+					to={'/songs/song?name=' + item.name + '&artist=' + item.artist.name}
+					state={{ song: item }}
+				>
 					{item.name}
 				</Link>
 			</td>

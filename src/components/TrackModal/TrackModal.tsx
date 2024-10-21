@@ -28,14 +28,26 @@ const TrackModal = () => {
 		bodyHidden(!!trackModal)
 	}, [trackModal])
 
+	if (!track || !track.wiki) return
+
 	return (
 		<div className={cn(s.modal, trackModal ? s.active : '')}>
-			<img src={cross} alt='Закрыть' className={s.cross} onClick={closeModal} />
+			<img
+				loading='lazy'
+				src={cross}
+				alt='Закрыть'
+				className={s.cross}
+				onClick={closeModal}
+			/>
 			{track && (
 				<>
 					<div className={s.wrapper}>
 						{track.album?.image && (
-							<img src={track.album.image[1]['#text']} alt='Обложка альбома' />
+							<img
+								loading='lazy'
+								src={track.album.image[1]['#text']}
+								alt='Обложка альбома'
+							/>
 						)}
 						<div className={s.title}>
 							<p className={s.trackName}>{track.name}</p>

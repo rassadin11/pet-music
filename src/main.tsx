@@ -5,7 +5,6 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import LayoutMenu from './layout/Menu/LayoutMenu.tsx'
 import MainPage from './pages/MainPage/MainPage.tsx'
-import TopPage from './pages/TopPage/TopPage.tsx'
 import { store } from './store/store.ts'
 import { Provider } from 'react-redux'
 import AlbumsPage from './pages/AlbumsPage/AlbumsPage.tsx'
@@ -20,12 +19,8 @@ const router = createBrowserRouter([
 		element: <LayoutMenu />,
 		children: [
 			{
-				index: true, // Главная страница
+				index: true,
 				element: <MainPage />,
-			},
-			{
-				path: '/songs',
-				element: <TopPage />,
 			},
 			{
 				path: '/songs/song',
@@ -36,7 +31,7 @@ const router = createBrowserRouter([
 				element: <MusiciansPage />,
 			},
 			{
-				path: '/musicians/:authorName', // Динамический параметр
+				path: '/musicians/:authorName',
 				element: <MusicianPage />,
 			},
 			{
@@ -44,7 +39,7 @@ const router = createBrowserRouter([
 				element: <AlbumsPage />,
 			},
 			{
-				path: '/albums/:albumName',
+				path: '/albums/album',
 				element: <AlbumPage />,
 			},
 		],
