@@ -5,6 +5,7 @@ import { getPopularTags, getPopularTracksByTag } from '../../store/albums.slice'
 import Title from '../../components/Title/Title'
 import Loading from '../../components/Loading/Loading'
 import AlbumsBlock from '../../components/AlbumsBlock/AlbumsBlock'
+import s from './AlbumsPage.module.scss'
 
 const AlbumsPage = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -24,7 +25,7 @@ const AlbumsPage = () => {
 
 	return (
 		<div>
-			<Title>Самые популярные альбомы</Title>
+			<Title className={s.title}>Самые популярные альбомы</Title>
 			<AlbumsBlock albums={albums} />
 		</div>
 	)

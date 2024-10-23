@@ -7,7 +7,6 @@ import { getAlbumByName } from '../../store/albums.slice'
 import Loading from '../../components/Loading/Loading'
 import MainPreview from '../../components/MainPreview/MainPreview'
 import TracksTable from '../../components/TracksTable/TracksTable'
-import Title from '../../components/Title/Title'
 
 const AlbumPage = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -51,8 +50,14 @@ const AlbumPage = () => {
 				tags={activeAlbum.tags.tag}
 			/>
 			<section className={s.tracks}>
-				<Title className={s.title}>Треки альбома</Title>
-				<TracksTable tracks={activeAlbum.tracks.track} without={['listens']} />
+				<TracksTable
+					tracks={
+						Array.isArray(activeAlbum.tracks.track)
+							? activeAlbum.tracks.track
+							: [activeAlbum.tracks.track]
+					}
+					without={['listens']}
+				/>
 			</section>
 		</>
 	)

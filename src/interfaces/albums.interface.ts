@@ -23,7 +23,7 @@ export interface IActiveAlbum {
     name: string;
     image: IImage[];
     tracks: {
-        track: ITrack[]
+        track: ITrack[] | ITrack
     };
     listeners: string;
     playcound: string;

@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from '../../store/store'
 import { getMusicians } from '../../store/musicians.slice'
 import Title from '../../components/Title/Title'
 import MusicianIntro from '../../components/MusicianIntro/MusicianIntro'
+import s from './MusiciansPage.module.scss'
 
 const MusiciansPage = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -18,7 +19,7 @@ const MusiciansPage = () => {
 
 	return (
 		<div>
-			<Title>Выбери своего любимого музыканта!</Title>
+			<Title className={s.title}>Выбери своего любимого музыканта!</Title>
 			{musicians.length > 0 && <MusicianIntro items={musicians} />}
 		</div>
 	)

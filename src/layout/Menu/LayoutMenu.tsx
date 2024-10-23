@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import cn from 'classnames'
 import { bodyHidden } from '../../utils/BodyHidden'
 import TrackModal from '../../components/TrackModal/TrackModal'
+import SearchField from '../../components/SearchField/SearchField'
 
 interface IMenuItem {
 	id: number
@@ -21,11 +22,6 @@ const initialValue: IMenuItem[] = [
 		id: 2,
 		path: '/albums',
 		title: 'Альбомы',
-	},
-	{
-		id: 3,
-		path: '/songs',
-		title: 'Чарты',
 	},
 ]
 
@@ -50,13 +46,7 @@ const LayoutMenu = () => {
 								acous<span className={s.modern}>TI</span>cally
 							</div>
 						</Link>
-						<div className={s.search}>
-							<input
-								type='text'
-								placeholder='Введите название трека'
-								className={s.input}
-							/>
-						</div>
+						<SearchField />
 					</div>
 					<nav className={s.navList}>
 						<ul className={s.list}>

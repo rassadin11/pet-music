@@ -1,7 +1,6 @@
 import s from './MainBlock.module.scss'
 import musicians from '../../assets/biting_elbows.jpg'
 import chart from '../../assets/maneskin.jpg'
-import podcast from '../../assets/without_soul.jpg'
 import { Link } from 'react-router-dom'
 
 interface IBanner {
@@ -27,16 +26,8 @@ const initialValue: IBanner[] = [
 		title: 'Альбомы',
 		to: '/albums',
 		gridColumn: [3, 4],
-		gridRow: [1, 2],
+		gridRow: [1, 3],
 		background: chart,
-	},
-	{
-		id: 3,
-		title: 'Чарты',
-		to: '/songs',
-		gridColumn: [3, 4],
-		gridRow: [2, 3],
-		background: podcast,
 	},
 ]
 

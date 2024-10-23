@@ -11,7 +11,7 @@ const MainPage = () => {
 				<MainBlock />
 			</section>
 			<section className={s.wrapper}>
-				<Title>Популярные музыканты</Title>
+				<Title className={s.title}>Популярные музыканты</Title>
 				<MusiciansSlider />
 			</section>
 			<section>
