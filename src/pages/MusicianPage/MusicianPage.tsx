@@ -85,10 +85,18 @@ const MusicianPage = () => {
 		}
 	}
 
+	const getImage = () => {
+		if (document.body.clientWidth > 768) {
+			return activeMusician.albums?.[0]?.image?.[2]['#text']
+		}
+
+		return
+	}
+
 	return (
 		<section className={s.musician}>
 			<MainPreview
-				img={activeMusician.albums?.[0]?.image?.[2]['#text']}
+				img={getImage()}
 				title={activeMusician.name}
 				listens={`${listens} ${listensText}`}
 				tags={activeMusician.tags.tag}

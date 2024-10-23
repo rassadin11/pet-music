@@ -28,8 +28,6 @@ const TrackModal = () => {
 		bodyHidden(!!trackModal)
 	}, [trackModal])
 
-	if (!track || !track.wiki) return
-
 	return (
 		<div className={cn(s.modal, trackModal ? s.active : '')}>
 			<img
@@ -39,7 +37,7 @@ const TrackModal = () => {
 				className={s.cross}
 				onClick={closeModal}
 			/>
-			{track && (
+			{track && track.wiki && !isLoading ? (
 				<>
 					<div className={s.wrapper}>
 						{track.album?.image && (
@@ -65,6 +63,8 @@ const TrackModal = () => {
 						></p>
 					</div>
 				</>
+			) : (
+				<p>Слишком мало информации о данном треке на русском языке :(</p>
 			)}
 			{isLoading && <Loading type='small' />}
 		</div>

@@ -1,5 +1,7 @@
 .card {
     color: inherit;
+    display: flex;
+    flex-direction: column;
 
     &:hover {
         text-decoration: none;
@@ -20,6 +22,20 @@
 .imageWrapper {
     overflow: hidden;
     border-radius: 10px;
+}
+
+.emptyImage {
+    background: #ccc;
+    flex: 1 1 auto;
+}
+
+.emptyText {
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #000;
 }
 
 .album {

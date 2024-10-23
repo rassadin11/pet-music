@@ -4,6 +4,10 @@
 
 .searchWrapper {
     margin-left: 15px;
+
+    @media (max-width: 600px) {
+        margin-left: 0;
+    }
 }
 
 .input {

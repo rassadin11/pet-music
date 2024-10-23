@@ -74,7 +74,9 @@ const LayoutMenu = () => {
 				<ul className={s.list}>
 					{initialValue.map((item) => (
 						<li key={item.id}>
-							<Link to={item.path}>{item.title}</Link>
+							<Link to={item.path} onClick={() => setBurger(false)}>
+								{item.title}
+							</Link>
 						</li>
 					))}
 				</ul>

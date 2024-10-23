@@ -6,7 +6,7 @@ const MainPreview = ({ img, title, listens, tags }: MainPreviewProps) => {
 	return (
 		<section className={s.flex}>
 			{img ? <img className={s.image} src={img} alt={title} /> : ''}
-			<div>
+			<div className={s.info}>
 				<h1 className={s.title}>{title}</h1>
 				{listens ? <p>{listens}</p> : ''}
 				{tags?.length ? <Tags tags={tags} /> : ''}
