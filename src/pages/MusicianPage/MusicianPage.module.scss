@@ -1,9 +1,5 @@
 .musician {
-    color: #3d3d3d;
-
-    & a {
-        color: inherit;
-    }
+    color: var(--primary-color);
 }
 
 .description {
@@ -18,7 +14,7 @@
 }
 
 .similar {
-    color: #fff;
+    color: var(--secondary-color);
 }
 
 .title {

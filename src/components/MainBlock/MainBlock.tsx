@@ -15,7 +15,7 @@ interface IBanner {
 const initialValue: IBanner[] = [
 	{
 		id: 1,
-		title: 'Музыканты',
+		title: 'Musicians',
 		to: '/musicians',
 		gridColumn: [1, 3],
 		gridRow: [1, 3],
@@ -23,7 +23,7 @@ const initialValue: IBanner[] = [
 	},
 	{
 		id: 2,
-		title: 'Альбомы',
+		title: 'Albums',
 		to: '/albums',
 		gridColumn: [3, 4],
 		gridRow: [1, 3],

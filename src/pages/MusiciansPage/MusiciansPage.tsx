@@ -19,7 +19,7 @@ const MusiciansPage = () => {
 
 	return (
 		<div>
-			<Title className={s.title}>Выбери своего любимого музыканта!</Title>
+			<Title className={s.title}>Choose your favorite musician!</Title>
 			{musicians.length > 0 && <MusicianIntro items={musicians} />}
 		</div>
 	)

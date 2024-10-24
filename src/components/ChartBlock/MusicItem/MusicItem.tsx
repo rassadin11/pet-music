@@ -47,12 +47,7 @@ const MusicItem = memo(({ item, idx, without }: MusicItemProps) => {
 			{Number(without?.findIndex((s) => s == 'artistName')) > -1 ? (
 				''
 			) : (
-				<td
-					className={cn({
-						[s.artistName]: !isThreeColumns,
-						[s.bigArtistName]: isThreeColumns,
-					})}
-				>
+				<td className={cn(isThreeColumns ? s.artistName : s.bigArtistName)}>
 					<Link to={`/musicians/${item.artist.name}`}>{item.artist.name}</Link>
 				</td>
 			)}
@@ -60,23 +55,13 @@ const MusicItem = memo(({ item, idx, without }: MusicItemProps) => {
 			{Number(without?.findIndex((s) => s == 'listens')) > -1 ? (
 				''
 			) : (
-				<td
-					className={cn({
-						[s.playcount]: !isThreeColumns,
-						[s.bigPlaycount]: isThreeColumns,
-					})}
-				>
+				<td className={cn(isThreeColumns ? s.bigPlaycount : s.playcount)}>
 					{validateListeners(item.playcount)}
 				</td>
 			)}
 
-			<td>
-				<img
-					src={ellipsis}
-					alt='Ellipsis'
-					className={s.ellipsis}
-					onClick={handleOpenModal}
-				/>
+			<td className={s.ellipsis}>
+				<img src={ellipsis} alt='Ellipsis' onClick={handleOpenModal} />
 			</td>
 		</tr>
 	)

@@ -36,6 +36,7 @@ const SongPage = () => {
 	}, [dispatch, location.state, searchParams])
 
 	if (isLoading) return <Loading />
+	if (!track) return <p className={s.wrapper}>Track was not founded</p>
 
 	return (
 		<>
@@ -47,19 +48,15 @@ const SongPage = () => {
 							<p>{track.artist.name}</p>
 						</div>
 						{track.wiki?.published ? (
-							<p className={s.public}>Опубликовано: {track.wiki.published}</p>
+							<p className={s.public}>Published: {track.wiki.published}</p>
 						) : (
 							''
 						)}
 					</div>
 					<p className={s.listeners}>
 						{validateListeners(+track.playcount)}{' '}
-						{num_word(+track.playcount, [
-							'прослушивания',
-							'прослушивания',
-							'прослушиваний',
-						])}{' '}
-						за месяц
+						{num_word(+track.playcount, ['listens', 'listens', 'listens'])} per
+						month
 					</p>
 					<Tags tags={track.toptags.tag} />
 
@@ -72,8 +69,8 @@ const SongPage = () => {
 						></p>
 					) : (
 						<p className={s.error}>
-							К сожалению, на русском языке в базе данных нет информации об этом
-							треке. Попробуйте поискать на другом сайте :(
+							Unfortunately, there are not info about this track in english. Try
+							to find info in other places :(
 						</p>
 					)}
 				</div>

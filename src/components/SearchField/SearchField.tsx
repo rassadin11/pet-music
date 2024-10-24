@@ -28,7 +28,7 @@ const SearchField = () => {
 			<div className={s.search}>
 				<input
 					type='text'
-					placeholder='Введите название трека'
+					placeholder='Type name of track to search'
 					className={cn(
 						s.input,
 						trackMatches?.length && value.length ? s.noBorder : ''

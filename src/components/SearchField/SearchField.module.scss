@@ -23,11 +23,11 @@
     background-position-y: center;
     background-position-x: 0.5rem;
     background-repeat: no-repeat;
-    color: #fff;
+    color: var(--secondary-color);
     transition: all .3s ease;
 
     &::placeholder {
-        color: #fff;
+        color: var(--secondary-color);
     }
 
     @media (max-width: 600px) {
@@ -55,10 +55,10 @@
 
 .result {
     padding: 5px;
-    color: #fff;
+    color: var(--secondary-color);
 
     &:not(:last-child) {
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid var(--secondary-color);
     }
 
     &:last-child {

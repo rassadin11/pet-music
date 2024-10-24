@@ -15,7 +15,7 @@ export const getPopularTags = createAsyncThunk(
     'albums/tags',
     async () => {
         try {
-            const {data} = await axios.get(PREFIX + `?method=album.gettoptags&artist=radiohead&album=the%20bends&api_key=${API_KEY}&format=json&lang=ru`)
+            const {data} = await axios.get(PREFIX + `?method=album.gettoptags&artist=radiohead&album=the%20bends&api_key=${API_KEY}&format=json`)
             return data
         } catch (e) {
             if (e instanceof Error) {
@@ -27,7 +27,7 @@ export const getPopularTags = createAsyncThunk(
 
 export const getPopularTracksByTag = createAsyncThunk('albums/tracks', async (tag: string) => {
     try {
-        const {data} = await axios.get(PREFIX + `?method=tag.gettopalbums&tag=${tag}&api_key=${API_KEY}&format=json&lang=ru`)
+        const {data} = await axios.get(PREFIX + `?method=tag.gettopalbums&tag=${tag}&api_key=${API_KEY}&format=json`)
         return data
     } catch (e) {
         if (e instanceof Error) {
@@ -38,7 +38,7 @@ export const getPopularTracksByTag = createAsyncThunk('albums/tracks', async (ta
 
 export const getAlbumByName = createAsyncThunk('albums/track', async ({name, artist}: {name: string, artist: string}) => {
     try {
-        const {data} = await axios.get(PREFIX + `?method=album.getinfo&api_key=${API_KEY}&artist=${artist}&album=${name}&format=json&lang=ru`)
+        const {data} = await axios.get(PREFIX + `?method=album.getinfo&api_key=${API_KEY}&artist=${artist}&album=${name}&format=json`)
         return data;
     } catch (e) {
         if (e instanceof Error) {

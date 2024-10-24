@@ -10,9 +10,9 @@ const ArtistCard = ({ item }: ArtistCardProps) => {
 	const bioContent = item.detInfo?.info?.bio?.content || ''
 	const listenersText = validateListeners(item.playcount)
 	const listenersCount = num_word(+item.playcount, [
-		'прослушивания',
-		'прослушивания',
-		'прослушиваний',
+		'listens per month',
+		'listens per month',
+		'listens per month',
 	])
 
 	return (
@@ -45,8 +45,11 @@ const ArtistCard = ({ item }: ArtistCardProps) => {
 				</p>
 
 				<div className={s.link}>
-					<Button navigateTo='/' isSkeleton={!!bioContent}>
-						Узнать подробнее
+					<Button
+						navigateTo={'/musicians/' + item.name}
+						isSkeleton={!!bioContent}
+					>
+						Learn more
 					</Button>
 				</div>
 			</div>

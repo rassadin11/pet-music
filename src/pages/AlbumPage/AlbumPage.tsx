@@ -40,7 +40,7 @@ const AlbumPage = () => {
 	}, [activeAlbum, dispatch, state, searchParams])
 
 	if (isLoading) return <Loading />
-	if (!activeAlbum) return <p>error</p>
+	if (!activeAlbum) return <p>Something went wrong</p>
 
 	return (
 		<>

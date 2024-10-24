@@ -18,7 +18,7 @@ const initialState: IChartState = {
 
 export const getTracks = createAsyncThunk('chart/tracks', async () => {
     try {
-        const {data} = await axios.get(PREFIX + `?method=chart.gettoptracks&api_key=${API_KEY}&format=json&limit=10&lang=ru`)
+        const {data} = await axios.get(PREFIX + `?method=chart.gettoptracks&api_key=${API_KEY}&format=json&limit=10`)
 
         return data
     } catch (e) {
@@ -31,10 +31,10 @@ export const getTracks = createAsyncThunk('chart/tracks', async () => {
 export const getTrack = createAsyncThunk("chart/track", async ({artist, name}: {artist: string, name: string} | ITrack) => {
     try {
         if (isString(artist)) {
-            const {data} = await axios.get(PREFIX + `?method=track.getInfo&api_key=${API_KEY}&artist=${artist.name}&track=${name}&format=json&lang=ru`)
+            const {data} = await axios.get(PREFIX + `?method=track.getInfo&api_key=${API_KEY}&artist=${artist.name}&track=${name}&format=json`)
             return data
         } else {
-            const {data} = await axios.get(PREFIX + `?method=track.getInfo&api_key=${API_KEY}&artist=${artist}&track=${name}&format=json&lang=ru`)
+            const {data} = await axios.get(PREFIX + `?method=track.getInfo&api_key=${API_KEY}&artist=${artist}&track=${name}&format=json`)
             return data
         }
     } catch (e) {

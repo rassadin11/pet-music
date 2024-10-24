@@ -25,7 +25,7 @@ const AlbumsPage = () => {
 
 	return (
 		<div>
-			<Title className={s.title}>Самые популярные альбомы</Title>
+			<Title className={s.title}>Most popular albums</Title>
 			<AlbumsBlock albums={albums} />
 		</div>
 	)

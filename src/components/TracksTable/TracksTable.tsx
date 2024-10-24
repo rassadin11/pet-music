@@ -6,9 +6,7 @@ import cn from 'classnames'
 
 const TracksTable = memo(({ tracks, without }: TracksTableProps) => {
 	if (!tracks.length)
-		return (
-			<p className={s.error}>В базе данных нет треков с данного альбома :( </p>
-		)
+		return <p className={s.error}>There are no info about it :( </p>
 
 	return (
 		<table
@@ -24,16 +22,16 @@ const TracksTable = memo(({ tracks, without }: TracksTableProps) => {
 					})}
 				>
 					<th>#</th>
-					<th>Название</th>
+					<th>Title</th>
 					{Number(without?.findIndex((s) => s == 'artistName')) > -1 ? (
 						''
 					) : (
-						<th>Автор</th>
+						<th>Author</th>
 					)}
 					{Number(without?.findIndex((s) => s == 'listens')) > -1 ? (
 						''
 					) : (
-						<th>Прослушивания</th>
+						<th>Listens</th>
 					)}
 				</tr>
 				{tracks.map((item, idx) => (

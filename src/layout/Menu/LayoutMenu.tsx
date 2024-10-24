@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import s from './LayoutMenu.module.scss'
 import { useEffect, useState } from 'react'
 import cn from 'classnames'
@@ -15,22 +15,32 @@ interface IMenuItem {
 const initialValue: IMenuItem[] = [
 	{
 		id: 1,
-		path: '/musicians',
-		title: 'Музыканты',
+		path: '/',
+		title: 'Main',
 	},
 	{
 		id: 2,
+		path: '/musicians',
+		title: 'Musicians',
+	},
+	{
+		id: 3,
 		path: '/albums',
-		title: 'Альбомы',
+		title: 'Albums',
 	},
 ]
 
 const LayoutMenu = () => {
 	const [burger, setBurger] = useState<boolean>(false)
-
+	const [menu, setMenu] = useState(initialValue)
+	const location = useLocation()
 	const handleClick = () => {
 		setBurger((b) => !b)
 	}
+
+	useEffect(() => {
+		setMenu(initialValue.filter((item) => item.path !== location.pathname))
+	}, [location])
 
 	useEffect(() => {
 		bodyHidden(!!burger)
@@ -50,7 +60,7 @@ const LayoutMenu = () => {
 					</div>
 					<nav className={s.navList}>
 						<ul className={s.list}>
-							{initialValue.map((item) => (
+							{menu.map((item) => (
 								<li key={item.id}>
 									<Link to={item.path}>{item.title}</Link>
 								</li>
@@ -72,7 +82,7 @@ const LayoutMenu = () => {
 
 			<nav className={`${s.navMobile} ${burger ? s.active : ''}`}>
 				<ul className={s.list}>
-					{initialValue.map((item) => (
+					{menu.map((item) => (
 						<li key={item.id}>
 							<Link to={item.path} onClick={() => setBurger(false)}>
 								{item.title}

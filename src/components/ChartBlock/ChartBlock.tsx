@@ -28,7 +28,7 @@ const ChartBlock = () => {
 
 	return (
 		<div className={s.chart}>
-			<Title className={s.title}>Самые популярные песни</Title>
+			<Title className={s.title}>Most popular songs</Title>
 			{tracks ? <TracksTable tracks={tracks} /> : <p>{chartErrorMessage}</p>}
 		</div>
 	)

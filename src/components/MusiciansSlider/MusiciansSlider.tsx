@@ -61,15 +61,16 @@ const MusiciansSlider = () => {
 					})}
 			</Swiper>
 
+			{/* исправить стрелочки в мобильной версии */}
 			<div className={s.arrows}>
 				<button className={s.button}>
-					<img src={arrow} alt='Предыдущий слайд' className={s.prevArrow} />
+					<img src={arrow} alt='Previous slide' className={s.prevArrow} />
 				</button>
 
 				<div className='s-pagination'></div>
 
 				<button className={s.button}>
-					<img src={arrow} alt='Следующий слайд' className={s.nextArrow} />
+					<img src={arrow} alt='Next slide' className={s.nextArrow} />
 				</button>
 			</div>
 		</div>

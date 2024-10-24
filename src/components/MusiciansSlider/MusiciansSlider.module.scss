@@ -17,6 +17,10 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
+
+    @media (max-width: 450px) {
+        width: 100%;
+    }
 }
 
 .slide {
@@ -37,5 +41,5 @@
 
 .swiperWrapper {
     position: relative;
-    color: #3d3d3d;
+    color: var(--primary-color);
 }

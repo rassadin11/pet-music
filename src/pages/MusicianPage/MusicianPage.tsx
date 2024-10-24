@@ -58,9 +58,9 @@ const MusicianPage = () => {
 
 		setListensText(
 			num_word(+(activeMusician?.stats?.listeners || 0), [
-				'прослушивания в месяц',
-				'прослушивания в месяц',
-				'прослушиваний в месяц',
+				'listens per month',
+				'listens per month',
+				'listens per month',
 			])
 		)
 	}, [activeMusician?.stats?.listeners])
@@ -103,7 +103,7 @@ const MusicianPage = () => {
 			/>
 
 			<section>
-				<h2 className={s.title}>Популярные песни</h2>
+				<h2 className={s.title}>Popular songs</h2>
 				<div className={s.tableWrapper}>
 					{activeMusician.toptracks && (
 						<TracksTable
@@ -115,19 +115,19 @@ const MusicianPage = () => {
 			</section>
 
 			<section>
-				<h2 className={s.title}>Альбомы</h2>
+				<h2 className={s.title}>Albums</h2>
 				<AlbumsBlock albums={activeMusician.albums?.map(modifyAlbums)} />
 			</section>
 
 			<section>
-				<h2 className={s.title}>Похожие музыканты</h2>
+				<h2 className={s.title}>Similar musicians</h2>
 				<div className={s.similar}>
 					<MusicianIntro items={activeMusician.similar.artist} />
 				</div>
 			</section>
 
 			<section>
-				<h2 className={s.title}>Подробное описание</h2>
+				<h2 className={s.title}>Artist in detail</h2>
 				<p
 					dangerouslySetInnerHTML={{
 						__html: activeMusician.bio.content,
