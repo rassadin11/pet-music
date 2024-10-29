@@ -47,7 +47,7 @@
     flex-direction: column;
     width: 100%;
     top: 100%;
-    background: #777d72;
+    background: linear-gradient(140deg, var(--background-purple-color) 25%, var(--background-dark-blue-color) 100%);
     z-index: 1000;
     max-height: 250px;
     overflow-y: auto;
@@ -56,8 +56,8 @@
 .result {
     padding: 5px;
     color: var(--secondary-color);
-
-    &:not(:last-child) {
+    
+    &:not(:last-child) {   
         border-bottom: 1px solid var(--secondary-color);
     }
 
@@ -66,7 +66,9 @@
     }
 
     &:hover {
-        background: #a3a99f;
+        & > * {
+            text-decoration: underline;
+        }
     }
 }
 

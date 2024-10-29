@@ -7,22 +7,27 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../store/store'
 import { globalActions, searchArtistByInput } from '../../store/global.slice'
 import { validateListeners } from '../../utils/TrackValidation'
+import Loading from '../Loading/Loading'
+import { Link } from 'react-router-dom'
 
 const SearchByArtist = () => {
+	// масштабируемый и статичный инпуты и взаимодействие с ними
 	const [value, setValue] = useState<string>('')
 	const [fakeValue, setFakeValue] = useState<string>('')
 	const [coords, setCoords] = useState<DOMRect | undefined>()
 	const [isFocus, setFocus] = useState<boolean>(false)
 
-	const dispatch = useDispatch<AppDispatch>()
-	const scrollWidth = useSelector((s: RootState) => s.global.scrollBarWidth)
-	const artistMatches = useSelector((s: RootState) => s.global.artistMatches)
-
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const realInputRef = useRef<HTMLInputElement | null>(null)
 
+	const dispatch = useDispatch<AppDispatch>()
+	const scrollWidth = useSelector((s: RootState) => s.global.scrollBarWidth)
+	const { isLoading, artistMatches } = useSelector((s: RootState) => s.global)
+
+	// осуществляем анимацию инпута
 	useEffect(() => {
 		if (!coords || !realInputRef.current || !inputRef.current) return
+		const isMobile = document.body.clientWidth <= 768
 
 		const setInitialFocusStyles = () => {
 			Object.assign(realInputRef.current!.style, {
@@ -34,6 +39,7 @@ const SearchByArtist = () => {
 				opacity: '1',
 				visibility: 'visible',
 			})
+
 			Object.assign(inputRef.current!.style, {
 				opacity: '0',
 				visibility: 'hidden',
@@ -47,8 +53,8 @@ const SearchByArtist = () => {
 				top: '40%',
 				left: '50%',
 				transform: 'translate(-50%, -50%)',
-				padding: '60px 20px',
-				fontSize: 'min(6vw, 40px)',
+				padding: isMobile ? '30px 20px' : '60px 20px',
+				fontSize: isMobile ? '24px' : '40px',
 			})
 		}
 
@@ -115,10 +121,6 @@ const SearchByArtist = () => {
 		}
 	}, [dispatch, value])
 
-	useEffect(() => {
-		console.log(artistMatches)
-	}, [artistMatches])
-
 	return (
 		<>
 			<div className={cn(s.centerWrapper, isFocus ? s.focus : '')}>
@@ -150,19 +152,25 @@ const SearchByArtist = () => {
 							setValue={setValue}
 						/>
 
-						<div
-							className={cn(
-								s.searchResults,
-								isFocus && artistMatches?.length ? '' : s.hide
-							)}
-						>
-							{artistMatches?.map((item) => (
-								<div className={s.result}>
-									<p>{item.name}</p>
-									<p>{validateListeners(item.listeners)} listens</p>
-								</div>
-							))}
-						</div>
+						{isLoading ? (
+							<div className={s.searchLoading}>
+								<Loading type='small' />
+							</div>
+						) : (
+							<div
+								className={cn(
+									s.searchResults,
+									isFocus && artistMatches?.length ? '' : s.hide
+								)}
+							>
+								{artistMatches?.map((item) => (
+									<Link to={'/musicians/' + item.name} className={s.result}>
+										<p>{item.name}</p>
+										<p>{validateListeners(item.listeners)} listens</p>
+									</Link>
+								))}
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
