@@ -12,11 +12,23 @@ interface ISearchTrack {
     image: string
 }
 
+interface IArtistSearch {
+    name: string,
+    mbid: string,
+    url: string,
+    image_small: string,
+    image: string,
+    streamable: string | number
+    listeners: string,
+}
+
 interface IGlobalState {
     trackModal: ITrack | null
     trackMatches: ISearchTrack[] | null;
+    artistMatches: IArtistSearch[] | null;
     isLoading: boolean;
     searchError: string;
+    scrollBarWidth: number;
 }
 
 export enum TypeOfTrackMatches {
@@ -27,13 +39,26 @@ export enum TypeOfTrackMatches {
 const initialState: IGlobalState = {
     trackModal: null,
     trackMatches: null,
+    artistMatches: null,
     isLoading: false,
+    scrollBarWidth: 0,
     searchError: ''
 }
 
-export const searchTrackByInput = createAsyncThunk('global/search', async (value: string) => {
+export const searchTrackByInput = createAsyncThunk('global/tracksearch', async (value: string) => {
     try {
         const {data} = await axios.get(PREFIX + `?method=track.search&track=${value}&api_key=${API_KEY}&format=json&limit=10`)
+        return data;
+    } catch (e) {
+        if (e instanceof Error) {
+            throw new Error(e.message)
+        }
+    }
+})
+
+export const searchArtistByInput = createAsyncThunk('global/artistsearch', async (name: string) => {
+    try {
+        const {data} = await axios.get(PREFIX + `?method=artist.search&artist=${name}&api_key=${API_KEY}&format=json&limit=10`)
         return data;
     } catch (e) {
         if (e instanceof Error) {
@@ -51,7 +76,22 @@ export const globalSlice = createSlice({
         },
         resetSearch: (state) => {
             state.trackMatches = null
-        } 
+        },
+        resetArtistSearch: (state) => {
+            state.artistMatches = null
+        },
+        countScrollBarWidth: (state) => {
+            const div = document.createElement('div');
+            div.style.visibility = 'hidden';
+            div.style.overflow = 'scroll';
+            div.style.width = '100px';
+            div.style.height = '100px';
+
+            document.body.appendChild(div);
+            const scrollbarWidth = div.offsetWidth - div.clientWidth;
+            document.body.removeChild(div);
+            state.scrollBarWidth = scrollbarWidth;
+        }
     },
     extraReducers: builder => {
         builder.addCase(searchTrackByInput.fulfilled, (state, action) => {
@@ -65,6 +105,22 @@ export const globalSlice = createSlice({
         })
 
         builder.addCase(searchTrackByInput.rejected, (state, action) => {
+            state.isLoading = false
+            if (!action.error.message) return;
+            state.searchError = action.error.message
+        })
+        
+        builder.addCase(searchArtistByInput.fulfilled, (state, action) => {
+            state.isLoading = false
+            if (!action.payload) return;
+            state.artistMatches = action.payload.results.artistmatches.artist;
+        })
+
+        builder.addCase(searchArtistByInput.pending, (state) => {
+            state.isLoading = true
+        })
+
+        builder.addCase(searchArtistByInput.rejected, (state, action) => {
             state.isLoading = false
             if (!action.error.message) return;
             state.searchError = action.error.message

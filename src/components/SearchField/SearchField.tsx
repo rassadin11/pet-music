@@ -5,7 +5,7 @@ import { AppDispatch, RootState } from '../../store/store'
 import { globalActions, searchTrackByInput } from '../../store/global.slice'
 import Loading from '../Loading/Loading'
 import { Link } from 'react-router-dom'
-import cn from 'classnames'
+import Input from '../Input/Input'
 
 const SearchField = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -26,17 +26,15 @@ const SearchField = () => {
 	return (
 		<div className={s.searchWrapper}>
 			<div className={s.search}>
-				<input
-					type='text'
-					placeholder='Type name of track to search'
-					className={cn(
-						s.input,
-						trackMatches?.length && value.length ? s.noBorder : ''
-					)}
+				<Input
 					value={value}
-					onChange={(e) => setValue(e.target.value)}
+					setValue={setValue}
+					className={`${s.input} ${
+						trackMatches?.length && value.length ? s.noBorder : ''
+					}`}
+					placeholder='Type whatever you want'
+					type='text'
 				/>
-
 				<div className={s.results}>
 					{trackMatches?.length && value.length > 0 && (
 						<>

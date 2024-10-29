@@ -14,6 +14,7 @@ html, * {
   --secondary-color: #fff;
   --background-purple-color:  #7e07a9;
   --background-dark-blue-color: #3016b0;
+  --placeholder-color: rgba(255, 255, 255, 0.6);
 }
 
 body {

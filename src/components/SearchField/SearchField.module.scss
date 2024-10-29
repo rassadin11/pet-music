@@ -27,7 +27,7 @@
     transition: all .3s ease;
 
     &::placeholder {
-        color: var(--secondary-color);
+        color: var(--placeholder-color);
     }
 
     @media (max-width: 600px) {

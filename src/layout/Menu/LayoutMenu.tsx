@@ -5,6 +5,9 @@ import cn from 'classnames'
 import { bodyHidden } from '../../utils/BodyHidden'
 import TrackModal from '../../components/TrackModal/TrackModal'
 import SearchField from '../../components/SearchField/SearchField'
+import { AppDispatch } from '../../store/store'
+import { useDispatch } from 'react-redux'
+import { globalActions } from '../../store/global.slice'
 
 interface IMenuItem {
 	id: number
@@ -31,6 +34,7 @@ const initialValue: IMenuItem[] = [
 ]
 
 const LayoutMenu = () => {
+	const dispatch = useDispatch<AppDispatch>()
 	const [burger, setBurger] = useState<boolean>(false)
 	const [menu, setMenu] = useState(initialValue)
 	const location = useLocation()
@@ -45,6 +49,10 @@ const LayoutMenu = () => {
 	useEffect(() => {
 		bodyHidden(!!burger)
 	}, [burger])
+
+	useEffect(() => {
+		dispatch(globalActions.countScrollBarWidth())
+	}, [dispatch])
 
 	return (
 		<div>

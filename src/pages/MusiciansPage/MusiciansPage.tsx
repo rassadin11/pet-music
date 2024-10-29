@@ -5,6 +5,7 @@ import { getMusicians } from '../../store/musicians.slice'
 import Title from '../../components/Title/Title'
 import MusicianIntro from '../../components/MusicianIntro/MusicianIntro'
 import s from './MusiciansPage.module.scss'
+import SearchByArtist from '../../components/SearchByArtits/SearchByArtist'
 
 const MusiciansPage = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -19,6 +20,8 @@ const MusiciansPage = () => {
 
 	return (
 		<div>
+			<SearchByArtist />
+
 			<Title className={s.title}>Choose your favorite musician!</Title>
 			{musicians.length > 0 && <MusicianIntro items={musicians} />}
 		</div>
