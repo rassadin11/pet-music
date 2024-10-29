@@ -1,50 +1,26 @@
 # acousTIcally (пет проект)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Цель данного пет проекта
 
-Currently, two official plugins are available:
+1. Получить практику работы с API и обработкой запросов при помощи Redux
+2. Использовать как можно больше новых библиотек
+3. Минимально оптимизировать ререндеры 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Немного о проекте
 
-## Expanding the ESLint configuration
+acousTIcally &ndash; это сервис, который позволяет найти информацию о любом музыкальном артисте, его треке или альбоме. К сожалению, найденное API от ([last.spi ](https://www.last.fm/ru/api)) не позволяет выполнить некоторые более сложные действия. Другие недорогие, но платные API не получается оплатить из РФ :(
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+В проекте использовались: 
+  1. React
+  2. Redux-Toolkit
+  3. Axios
+  4. Classnames
+  5. SCSS-modules
+  6. React Skeleton
+  7. React router dom
+  8. Swiper
+  9. Typograph (приводит текст в нормальное состояние после получения данных с сервера)
 
-- Configure the top-level `parserOptions` property like this:
+В целом из-за ограниченности API приходится посылать множество запросов на сервер. Поэтому некоторые запросы оптимизированы и посылаются только при определенных действиях пользователя (как например загрузка данных для слайдера). Также не получается реализовать кнопку "Загрузить больше" т.к. в ответе от сервера могут приходить одинаковые результаты, а проверять каждый из результатов выше с пришедшими слишком затратно. Для этого есть инпуты :)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+P.S. дизайн придуман самостоятельно...
