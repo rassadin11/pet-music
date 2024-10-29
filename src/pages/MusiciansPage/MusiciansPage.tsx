@@ -5,7 +5,7 @@ import { getMusicians } from '../../store/musicians.slice'
 import Title from '../../components/Title/Title'
 import MusicianIntro from '../../components/MusicianIntro/MusicianIntro'
 import s from './MusiciansPage.module.scss'
-import SearchByArtist from '../../components/SearchByArtits/SearchByArtist'
+import SearchByArtist from '../../components/SearchByArtist/SearchByArtist'
 
 const MusiciansPage = () => {
 	const dispatch = useDispatch<AppDispatch>()

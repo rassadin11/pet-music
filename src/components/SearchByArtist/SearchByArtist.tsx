@@ -9,6 +9,7 @@ import { globalActions, searchArtistByInput } from '../../store/global.slice'
 import { validateListeners } from '../../utils/TrackValidation'
 import Loading from '../Loading/Loading'
 import { Link } from 'react-router-dom'
+import { bodyHidden } from '../../utils/BodyHidden'
 
 const SearchByArtist = () => {
 	// масштабируемый и статичный инпуты и взаимодействие с ними
@@ -83,12 +84,14 @@ const SearchByArtist = () => {
 
 		if (isFocus) {
 			setInitialFocusStyles()
+			bodyHidden(true)
 			setTimeout(() => {
 				if (!realInputRef.current) return
 				animateToFocused()
 			}, 50)
 		} else {
 			resetStyles()
+			bodyHidden(false)
 			setTimeout(() => {
 				if (!realInputRef.current) return
 				hideRealInput()
@@ -164,7 +167,12 @@ const SearchByArtist = () => {
 								)}
 							>
 								{artistMatches?.map((item) => (
-									<Link to={'/musicians/' + item.name} className={s.result}>
+									<Link
+										to={'/musicians/' + item.name}
+										className={s.result}
+										onClick={() => bodyHidden(false)}
+										key={item.name}
+									>
 										<p>{item.name}</p>
 										<p>{validateListeners(item.listeners)} listens</p>
 									</Link>

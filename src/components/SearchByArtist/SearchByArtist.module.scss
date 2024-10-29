@@ -95,6 +95,7 @@
     overflow: hidden;
     opacity: 1;
     visibility: visible;
+    overflow-y: auto;
 
     &.hide {
         opacity: 0;
