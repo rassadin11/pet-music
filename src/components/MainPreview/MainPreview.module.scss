@@ -1,34 +1,34 @@
 .title {
-    font-size: 56px;
+  font-size: 56px;
 
-    @media (max-width: 768px) {
-        font-size: 46px;
-    }
+  @media (max-width: 768px) {
+    font-size: 46px;
+  }
 }
 
 .flex {
-    display: flex;
-    gap: 15px;
-    align-items: flex-end;
-    color: var(--primary-color);
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+  color: var(--primary-color);
 
-    @media (max-width: 650px) {
-        flex-direction: column;
-        align-items: center;
-    }
+  @media (max-width: 650px) {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .info {
-    @media (max-width: 650px) {
-        width: 100%;
-    }
+  @media (max-width: 650px) {
+    width: 100%;
+  }
 }
 
 .image {
-    border-radius: 10px;
-    width: 174px;
+  border-radius: 0.75rem;
+  width: 174px;
 
-    @media (max-width: 650px) {
-        display: none;
-    }
+  @media (max-width: 650px) {
+    display: none;
+  }
 }

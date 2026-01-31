@@ -1,16 +1,16 @@
 .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
-    color: var(--secondary-color);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  color: var(--secondary-color);
 }
 
 .tag {
-    & a {
-        padding: 5px 10px;
-        background: rgba(0, 0, 0, 0.4);
-        border-radius: 3px;
-        display: block;
-    }
+  & a {
+    padding: 5px 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    display: block;
+  }
 }

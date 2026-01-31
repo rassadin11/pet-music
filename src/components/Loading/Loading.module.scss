@@ -1,13 +1,17 @@
 .loaderWrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(84deg, var(--background-purple-color) 25%, var(--background-dark-blue-color) 100%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    195deg,
+    var(--background-purple-color) 25%,
+    var(--background-dark-blue-color) 100%
+  );
 }
 
 .smallWrapper {
@@ -16,7 +20,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   & .loader {
     width: 30%;
     color: var(--secondary-color);
@@ -25,7 +29,7 @@
 
 /* HTML: <div class="loader"></div> */
 .loader {
-  width: 120px;
+  width: 11.25rem;
   height: 22px;
   border-radius: 40px;
   color: var(--secondary-color);
@@ -35,20 +39,22 @@
 }
 
 .loader::before {
-  content: "";
+  content: '';
   position: absolute;
   margin: 2px;
   width: 14px;
   top: 0;
   bottom: 0;
-  left: -20px;
+  left: -1.25rem;
   border-radius: inherit;
   background: currentColor;
   box-shadow: -10px 0 12px 3px currentColor;
-  clip-path: polygon(0 5%, 100% 0,100% 100%,0 95%,-30px 50%);
+  clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 95%, -2rem 50%);
   animation: l14 1s infinite linear;
 }
 
 @keyframes l14 {
-  100% {left: calc(100% + 20px)}
+  100% {
+    left: calc(100% + 20px);
+  }
 }

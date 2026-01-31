@@ -1,31 +1,33 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../../store/store'
-import { getMusicians } from '../../store/musicians.slice'
+import {useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {AppDispatch, RootState} from '../../store/store'
+import {getMusicians} from '../../store/musicians/musicians.thunks'
 import Title from '../../components/Title/Title'
 import MusicianIntro from '../../components/MusicianIntro/MusicianIntro'
 import s from './MusiciansPage.module.scss'
 import SearchByArtist from '../../components/SearchByArtist/SearchByArtist'
 
 const MusiciansPage = () => {
-	const dispatch = useDispatch<AppDispatch>()
-	const { musicians } = useSelector((s: RootState) => s.musicians)
+  const dispatch = useDispatch<AppDispatch>()
+  const {musicians} = useSelector((s: RootState) => s.musicians)
 
-	// получаем топ-50 самых популярных исполнителей
-	useEffect(() => {
-		if (musicians.length < 50) {
-			dispatch(getMusicians(50))
-		}
-	}, [dispatch, musicians.length])
+  // получаем топ-50 самых популярных исполнителей
+  useEffect(() => {
+    if (musicians.length < 50) {
+      dispatch(getMusicians(50))
+    }
+  }, [dispatch, musicians.length])
 
-	return (
-		<div>
-			<SearchByArtist />
+  return (
+    <div>
+      <SearchByArtist />
 
-			<Title className={s.title}>Choose your favorite musician!</Title>
-			{musicians.length > 0 && <MusicianIntro items={musicians} />}
-		</div>
-	)
+      <Title className={s.title}>
+        Choose your favorite musician!
+      </Title>
+      {musicians.length > 0 && <MusicianIntro items={musicians} />}
+    </div>
+  )
 }
 
 export default MusiciansPage

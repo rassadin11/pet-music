@@ -1,48 +1,56 @@
 .card {
-    color: inherit;
-    display: flex;
-    flex-direction: column;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
 
-    &:hover {
-        text-decoration: none;
+  &:hover {
+    text-decoration: none;
 
-        & img {
-            transform: scale(1.1);
-        }
-    }
-    
     & img {
-        width: 100%;
-        transition: all .3s ease;
-        object-fit: cover;
-        display: block;
+      transform: scale(1.1);
     }
+  }
+
+  & img {
+    width: 100%;
+    transition: all 0.3s ease;
+    object-fit: cover;
+    display: block;
+  }
 }
 
 .imageWrapper {
-    overflow: hidden;
-    border-radius: 10px;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  height: 185px;
+
+  img {
+    transition: all 0.3s ease;
+    object-fit: cover;
+    display: block;
+    height: 100%;
+  }
 }
 
 .emptyImage {
-    background: #ccc;
-    flex: 1 1 auto;
+  background: #ccc;
+  flex: 1 1 auto;
 }
 
 .emptyText {
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: var(--secondary-color);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--secondary-color);
 }
 
 .album {
-    font-size: 20px;
-    margin-top: 5px;
+  font-size: 1.25rem;
+  margin-top: 5px;
 }
 
 .artist {
-    font-size: 14px;
+  font-size: 14px;
 }
